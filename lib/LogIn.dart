@@ -157,32 +157,18 @@ class LogIn extends StatelessWidget {
                             ],
                           ),
                         ),
+                        ElevatedButton(
+                          onPressed:(){
+
+                          },
+                          style: ElevatedButton.styleFrom(primary: Color.fromRGBO(194, 78, 84, 1),padding: EdgeInsets.fromLTRB(150, 0, 150, 0)),
+                          child: Text('LogIn'),
+                        ),
                         SizedBox(
                           height: 30,
                           width: 50,
                         ),
-                        Container(
-                          height: 60,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(0),
-                              gradient: LinearGradient(colors: [
-                                Color.fromRGBO(194, 78, 84, 1),
-                                Color.fromRGBO(194, 78, 84, 1),
-                              ])),
-                          child: Center(
-                            child: FlatButton(
-                              onPressed: () {
-                                Navigator.pushNamed(context, HomePage.id);
-                              },
-                              child: Text(
-                                'Login',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ),
-                        ),
+
                         SizedBox(
                           height: 90,
                         ),
