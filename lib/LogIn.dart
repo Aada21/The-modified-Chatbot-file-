@@ -17,21 +17,21 @@ class LogIn extends StatelessWidget {
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Container(
+            height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
                 image: DecorationImage(
               image: AssetImage('images/Background.png'),
               fit: BoxFit.fill,
             )),
-            child: Column(children: <Widget>[
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                height: 800,
-                child: Stack(children: <Widget>[
+            child: SingleChildScrollView(
+              child: Column(children: <Widget>[
+                SizedBox(
+                  height: 20,
+                ),
+                Stack(children: <Widget>[
                   Container(
-                    width: size.width,
+                    
                     child: Expanded(
                       child: Column(children: [
                         Container(
@@ -183,8 +183,8 @@ class LogIn extends StatelessWidget {
                     ),
                   )
                 ]),
-              ),
-            ]),
+              ]),
+            ),
           ),
         ));
   }
