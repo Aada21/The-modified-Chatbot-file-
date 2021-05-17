@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:imagebutton/imagebutton.dart';
+import 'package:profile_page/AnimationList.dart';
 import 'chatbot.dart';
 
 class HistoryPage extends StatefulWidget {
@@ -54,6 +55,9 @@ class _HistoryPageState extends State<HistoryPage> {
                       color: Colors.black,
                       iconSize: 20.0,
                       onPressed: () {
+
+                        Navigator.pushNamed(context, AnimationList.id);
+
                         print('Edit ');
                       },
                     ),
@@ -175,3 +179,7 @@ DeviceType getDeviceType(MediaQueryData mediaQueryData) {
 }
 
 enum DeviceType { Mobile, Tablet, Desktop }
+
+
+
+

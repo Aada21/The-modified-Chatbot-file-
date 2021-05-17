@@ -88,39 +88,23 @@ class ProfilePage extends StatelessWidget {
                               ]),
                         ),
                       ),
-                      Container(
-                        width: screenWidth2 - 50,
-                        child: Column(
+                      Stack(
+                        children: [
+                        Column(
                             // mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                                  Padding(
-                                   padding: const EdgeInsets.fromLTRB(70, 0, 10, 0),
-
+                                   //Name
+                                   padding: const EdgeInsets.fromLTRB(110, 0, 10, 0),
                                    child: TextField(
                                     decoration: InputDecoration(
-                                        hintText: "Name : ",
+
+                                        border: InputBorder.none,
+                                        focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                            borderSide: BorderSide(color: Colors.grey)),
+                                            hintText: ('Your Name '),
                                         labelStyle: TextStyle(
                                           color: Colors.black,
                                           fontSize: 20,
@@ -131,16 +115,16 @@ class ProfilePage extends StatelessWidget {
                                 ),
 
                               Padding(
-                                padding: const EdgeInsets.fromLTRB(70, 0, 10, 0),
+                                padding: const EdgeInsets.fromLTRB(110, 12, 10, 0),
 
                                 child: TextField(
                                   keyboardType: TextInputType.number,
                                   decoration: InputDecoration(
-                                      focusedBorder: InputBorder.none,
-                                      enabledBorder: InputBorder.none,
-                                      errorBorder: InputBorder.none,
-                                      disabledBorder: InputBorder.none,
-                                      labelText: "Phone: ",
+                                      border: InputBorder.none,
+                                      focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                          borderSide: BorderSide(color: Colors.grey)),
+                                      hintText: ('Your Phone '),
                                       labelStyle: TextStyle(
                                           color: Colors.black, fontSize: 20),
                                       hintStyle: TextStyle(color: Colors.black)),
@@ -148,44 +132,95 @@ class ProfilePage extends StatelessWidget {
                               ),
 
                               Padding(
-                                padding: const EdgeInsets.fromLTRB(70, 0, 10, 0),
+                                padding: const EdgeInsets.fromLTRB(110, 015, 10, 0),
 
                                 child: TextField(
-                                  keyboardType: TextInputType.number,
                                   decoration: InputDecoration(
-                                      focusedBorder: InputBorder.none,
-                                      enabledBorder: InputBorder.none,
-                                      errorBorder: InputBorder.none,
-                                      disabledBorder: InputBorder.none,
-                                      labelText: "Gender: ",
+                                      border: InputBorder.none,
+                                      focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                          borderSide: BorderSide(color: Colors.grey)),
+                                      hintText: ('Your Gender '),
+
                                       labelStyle: TextStyle(
                                           color: Colors.black, fontSize: 20),
                                       hintStyle: TextStyle(color: Colors.black)),
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.fromLTRB(70, 0, 10, 0),
+                                padding: const EdgeInsets.fromLTRB(110, 15, 10, 0),
                                 child: TextField(
                                   keyboardType: TextInputType.number,
                                   inputFormatters: [DateInputFormatter()],
                                   decoration: InputDecoration(
-                                      focusedBorder: InputBorder.none,
-                                      enabledBorder: InputBorder.none,
-                                      errorBorder: InputBorder.none,
-                                      disabledBorder: InputBorder.none,
-                                      labelText: "BirthDate: ",
+                                      border: InputBorder.none,
+                                      focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                          borderSide: BorderSide(color: Colors.grey)),
+                                      hintText: ('--/--/---- '),
                                       labelStyle: TextStyle(
                                           color: Colors.black, fontSize: 20),
                                       hintStyle: TextStyle(color: Colors.black)),
                                 ),
                               ),
                             ]),
-                      ),
+                          Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(10, 15, 10, 0),
+                                child: Text(
+                                  'Name :',
+                                  style: TextStyle(
+                                    color: Colors.black87,
+                                    fontSize: 16.0,
+                                    letterSpacing: 2.0,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(20, 40, 10, 0),
+                                child: Text(
+                                  'Phone :',
+                                  style: TextStyle(
+                                    color: Colors.black87,
+                                    fontSize: 16.0,
+                                    letterSpacing: 2.0,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(10, 45, 10, 0),
+                                child: Text(
+                                  'Gender :',
+                                  style: TextStyle(
+                                    color: Colors.black87,
+                                    fontSize: 16.0,
+                                    letterSpacing: 2.0,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(10, 50, 10, 0),
+                                child: Text(
+                                  'BirthDate :',
+                                  style: TextStyle(
+                                    color: Colors.black87,
+                                    fontSize: 16.0,
+                                    letterSpacing: 2.0,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+
+
+                     ] ),
                       Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             IconButton(
+                              padding: EdgeInsets.all(30),
                               //back icon
                               icon: const Icon(Icons.logout),
                               color: Colors.black,
