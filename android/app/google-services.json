@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "435066688809",
+    "project_id": "bubbly-mission-312902",
+    "storage_bucket": "bubbly-mission-312902.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:435066688809:android:f6d66d4648646099cd9338",
+        "android_client_info": {
+          "package_name": "com.muhammed.profile_page"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "435066688809-q9u2lrindgb49v1t4a7inddsiibv7t10.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhVN5OOioiwPzPojXWVAKpIIyblKblI1A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "435066688809-q9u2lrindgb49v1t4a7inddsiibv7t10.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
