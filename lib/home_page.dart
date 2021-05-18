@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import '';
 import 'package:flutter/material.dart';
 import 'package:imagebutton/imagebutton.dart';
 import 'package:profile_page/Diabetes.dart';
@@ -14,6 +16,25 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final _auth = FirebaseAuth.instance;
+  User loggedInUser;
+  @override
+  void initState() {
+    super.initState();
+    getCurrentUser();
+  }
+
+  void getCurrentUser() async {
+    try {
+      final user = _auth.currentUser;
+      if (user != null) {
+        loggedInUser = user;
+        print(loggedInUser.email);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
   Future navigateToChatBot(context) async {
     Navigator.push(context, MaterialPageRoute(builder: (context) => ChatBot()));
   }

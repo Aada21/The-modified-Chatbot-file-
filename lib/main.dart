@@ -1,4 +1,5 @@
 //import 'dart:html';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:profile_page/AnimationList.dart';
 import 'package:profile_page/Diabetes.dart';
@@ -10,8 +11,11 @@ import 'LogIn.dart';
 import 'SplashScreen.dart';
 import 'home_page.dart';
 
-void main() => runApp(DogBot());
-
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(DogBot());
+}
 class DogBot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

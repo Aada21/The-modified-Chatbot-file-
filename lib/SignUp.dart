@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
@@ -6,15 +7,24 @@ import 'LogIn.dart';
 import 'home_page.dart';
 
 void main() => runApp(MaterialApp(
-  debugShowCheckedModeBanner: false,
-  home: SignUp(),
-));
+      debugShowCheckedModeBanner: false,
+      home: SignUp(),
+    ));
 
-class SignUp extends StatelessWidget {
+class SignUp extends StatefulWidget {
   static String id = 'SgnUp';
 
   @override
+  _SignUpState createState() => _SignUpState();
+}
+
+class _SignUpState extends State<SignUp> {
+  final _auth = FirebaseAuth.instance;
+  String email;
+  String password;
+  @override
   Widget build(BuildContext context) {
+
     var mediaQueryData = MediaQuery.of(context);
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
@@ -25,9 +35,9 @@ class SignUp extends StatelessWidget {
           height: screenHeight,
           decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('images/Background.png'),
-                fit: BoxFit.fill,
-              )),
+            image: AssetImage('images/Background.png'),
+            fit: BoxFit.fill,
+          )),
           child: Stack(
             children: [
               Positioned(
@@ -37,14 +47,15 @@ class SignUp extends StatelessWidget {
                 height: screenHeight / 3,
                 child: Container(
                   decoration: BoxDecoration(
-                    image: DecorationImage(image: AssetImage('images/patient.png')),
+                    image: DecorationImage(
+                        image: AssetImage('images/patient.png')),
                   ),
                 ),
               ),
 
               Positioned(
-                top: screenWidth /2,
-                left: screenWidth /4.9,
+                top: screenWidth / 2,
+                left: screenWidth / 4.9,
                 child: Container(
                   child: Text(
                     'Tameny Ya Doctor!',
@@ -66,15 +77,14 @@ class SignUp extends StatelessWidget {
                       borderRadius: BorderRadius.circular(7),
                       border: Border(
                           bottom: BorderSide(color: Colors.white),
-                          top:BorderSide(color: Colors.white),
+                          top: BorderSide(color: Colors.white),
                           left: BorderSide(color: Colors.white),
-                          right: BorderSide(color: Colors.white) )),
+                          right: BorderSide(color: Colors.white))),
                   child: TextField(
                     decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: "  First Name",
                         hintStyle: TextStyle(color: Colors.white)),
-
                   ),
                 ),
               ),
@@ -87,9 +97,9 @@ class SignUp extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: Colors.white.withOpacity(.3),
                       borderRadius: BorderRadius.circular(7),
-
-                      border: Border(bottom: BorderSide(color: Colors.white),
-                          top:BorderSide(color: Colors.white),
+                      border: Border(
+                          bottom: BorderSide(color: Colors.white),
+                          top: BorderSide(color: Colors.white),
                           left: BorderSide(color: Colors.white),
                           right: BorderSide(color: Colors.white))),
                   child: TextField(
@@ -101,7 +111,7 @@ class SignUp extends StatelessWidget {
                 ),
               ),
               Positioned(
-                top: screenHeight /2,
+                top: screenHeight / 2,
                 width: screenWidth - 55,
                 left: 30,
                 height: 60,
@@ -110,11 +120,16 @@ class SignUp extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: Colors.white.withOpacity(.3),
                       borderRadius: BorderRadius.circular(7),
-                      border: Border(bottom: BorderSide(color: Colors.white),
-                          top:BorderSide(color: Colors.white),
+                      border: Border(
+                          bottom: BorderSide(color: Colors.white),
+                          top: BorderSide(color: Colors.white),
                           left: BorderSide(color: Colors.white),
                           right: BorderSide(color: Colors.white))),
                   child: TextField(
+                    keyboardType: TextInputType.emailAddress,
+                    onChanged: (value) {
+                      email = value;
+                    },
                     decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: "Email Address",
@@ -124,7 +139,7 @@ class SignUp extends StatelessWidget {
               ),
               Positioned(
                 top: screenHeight - 280,
-                width: screenWidth -55,
+                width: screenWidth - 55,
                 left: 30,
                 height: 60,
                 child: Container(
@@ -132,11 +147,17 @@ class SignUp extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: Colors.white.withOpacity(.3),
                       borderRadius: BorderRadius.circular(7),
-                      border: Border(bottom: BorderSide(color: Colors.white),
-                          top:BorderSide(color: Colors.white),
+                      border: Border(
+                          bottom: BorderSide(color: Colors.white),
+                          top: BorderSide(color: Colors.white),
                           left: BorderSide(color: Colors.white),
                           right: BorderSide(color: Colors.white))),
                   child: TextField(
+                    obscureText: true,
+                    textAlign: TextAlign.center,
+                    onChanged: (value) {
+                      password = value;
+                    },
                     decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: "Password",
@@ -145,36 +166,45 @@ class SignUp extends StatelessWidget {
                 ),
               ),
               Positioned(
-                height: screenHeight-610,
-                top: screenHeight -220,
-                width: screenWidth-55,
-                left: screenWidth-330,
+                height: screenHeight - 610,
+                top: screenHeight - 220,
+                width: screenWidth - 55,
+                left: screenWidth - 330,
                 child: Container(
                   width: screenWidth,
                   padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
                   child: ElevatedButton(
-                    onPressed:(){
+                    onPressed: () {
                       Navigator.pushNamed(context, HomePage.id);
                     },
-                    style: ElevatedButton.styleFrom(primary: Color.fromRGBO(194, 78, 84, 1),padding: EdgeInsets.fromLTRB(110, 30, 100, 20)),
+                    style: ElevatedButton.styleFrom(
+                        primary: Color.fromRGBO(194, 78, 84, 1.0),
+                        padding: EdgeInsets.fromLTRB(110, 30, 100, 20)),
                     child: Text('SignUp'),
                   ),
                 ),
               ),
 
-
               //login button above first name
               Positioned(
                 top: 220,
                 left: 10,
-                child:
-                FlatButton(
-                  onPressed: (){
-                    Navigator.pushNamed(context, LogIn.id);
+                // ignore: deprecated_member_use
+                child: FlatButton(
+                  onPressed: () async {
+                    try {
+                      final newUser = await _auth.createUserWithEmailAndPassword(
+                          email: email, password: password);
+                      if (newUser != null) {
+                        Navigator.pushNamed(context, HomePage.id);
+                      }
+                    } catch (e) {
+                      print(e);
+                    }
                   },
                   child: Text(
                     'LogIn',
-                    style:TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
                       color: Colors.white,
@@ -186,14 +216,14 @@ class SignUp extends StatelessWidget {
               Positioned(
                 top: 220,
                 left: 110,
-                child:
-                FlatButton(
-                  onPressed: (){
+                child: FlatButton(
+                  onPressed: () {
+
                     Navigator.pushNamed(context, SignUp.id);
                   },
                   child: Text(
                     'Signup',
-                    style:TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
                       color: Colors.white,
@@ -201,7 +231,6 @@ class SignUp extends StatelessWidget {
                   ),
                 ),
               )
-
             ],
           ),
         ),

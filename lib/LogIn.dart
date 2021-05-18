@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
@@ -10,8 +11,17 @@ void main() => runApp(MaterialApp(
       home: LogIn(),
     ));
 
-class LogIn extends StatelessWidget {
+class LogIn extends StatefulWidget {
   static String id = 'LogIn';
+
+  @override
+  _LogInState createState() => _LogInState();
+}
+
+class _LogInState extends State<LogIn> {
+  final _auth = FirebaseAuth.instance;
+  String email;
+  String password;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -138,6 +148,10 @@ class LogIn extends StatelessWidget {
                                         bottom: BorderSide(
                                             color: Colors.grey[100]))),
                                 child: TextField(
+                                  keyboardType: TextInputType.emailAddress,
+                                  onChanged: (value) {
+                                    email = value;
+                                  },
                                   decoration: InputDecoration(
                                       border: InputBorder.none,
                                       hintText: "Email or Phone number",
@@ -148,6 +162,11 @@ class LogIn extends StatelessWidget {
                               Container(
                                 padding: EdgeInsets.all(8.0),
                                 child: TextField(
+                                  obscureText: true,
+                                  textAlign: TextAlign.center,
+                                  onChanged: (value) {
+                                    password = value;
+                                  },
                                   decoration: InputDecoration(
                                       border: InputBorder.none,
                                       hintText: "Password",
@@ -162,9 +181,17 @@ class LogIn extends StatelessWidget {
                           width: size.width,
                           padding: EdgeInsets.fromLTRB(0, 40, 0, 0),
                           child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.pushNamed(context, HomePage.id);
-                            },
+                              onPressed: () async {
+                                try {
+                                  final user = await _auth.signInWithEmailAndPassword(
+                                      email: email, password: password);
+                                  if (user != null) {
+                                    Navigator.pushNamed(context, HomePage.id);
+                                  }
+                                } catch (e) {
+                                  print(e);
+                                }
+                              },
                             style: ElevatedButton.styleFrom(
                                 primary: Color.fromRGBO(194, 78, 84, 1),
                                 padding: EdgeInsets.fromLTRB(110, 30, 100, 20)),
