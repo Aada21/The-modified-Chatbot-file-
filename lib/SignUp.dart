@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:profile_page/db.dart';
 
 import 'LogIn.dart';
 import 'home_page.dart';
@@ -21,6 +24,8 @@ class _SignUpState extends State<SignUp> {
   final _auth = FirebaseAuth.instance;
   String email;
   String password;
+  // Map<String,String> userInfo=new Map();
+
   @override
   Widget build(BuildContext context) {
     var mediaQueryData = MediaQuery.of(context);
@@ -126,8 +131,8 @@ class _SignUpState extends State<SignUp> {
                   child: TextField(
                     keyboardType: TextInputType.emailAddress,
                     onChanged: (value) {
-                      email = value;
-                    },
+                    email = value;
+                  },
                     decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: "Email Address",
@@ -170,18 +175,24 @@ class _SignUpState extends State<SignUp> {
                 left: screenWidth - 330,
                 child: Container(
                   width: screenWidth,
-                  padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
+                  padding: EdgeInsets.fromLTRB(30, 30, 30, 30),
                   child: ElevatedButton(
                     onPressed: () async {
                       try {
                         final newUser =
-                            await _auth.createUserWithEmailAndPassword(
-                                email: email, password: password);
+                        await _auth.createUserWithEmailAndPassword(
+                            email: email, password: password);
+                             var user = newUser.user;
+                              var map = {'fName':'Ahmed' ,'email': user.email,'phone':user.displayName};
+
+                        await DatabaseService(uid: user.uid,info: map).updateUserData();
+                        print("3666666"+newUser.toString());
+
                         if (newUser != null) {
                           Navigator.pushNamed(context, HomePage.id);
                         }
                       } catch (e) {
-                        print(e);
+                        print("55555555555555555555555"+e.toString());
                       }
                     },
                     style: ElevatedButton.styleFrom(
@@ -235,3 +246,5 @@ class _SignUpState extends State<SignUp> {
     );
   }
 }
+
+
