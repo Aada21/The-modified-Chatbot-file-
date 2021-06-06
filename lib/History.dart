@@ -9,7 +9,9 @@ import 'chatbot.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-// import 'package:pdf/PdfPreviewScreen.dart';
+import 'package:flutter_full_pdf_viewer/flutter_full_pdf_viewer.dart';
+import 'package:flutter_full_pdf_viewer/full_pdf_viewer_plugin.dart';
+import 'package:flutter_full_pdf_viewer/full_pdf_viewer_scaffold.dart';
 
 class HistoryPage extends StatefulWidget {
   static String id = 'History_page';
