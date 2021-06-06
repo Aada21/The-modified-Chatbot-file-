@@ -138,10 +138,7 @@ class _LogInState extends State<LogIn> {
                             children: <Widget>[
                               Container(
                                 padding: EdgeInsets.all(8.0),
-                                decoration: BoxDecoration(
-                                    border: Border(
-                                        bottom: BorderSide(
-                                            color: Colors.grey[100]))),
+
                                 child: TextFormField(
                                   textAlign: TextAlign.center,
                                   keyboardType: TextInputType.emailAddress,

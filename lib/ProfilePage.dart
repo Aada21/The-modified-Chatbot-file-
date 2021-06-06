@@ -143,20 +143,8 @@ class ProfilePage extends StatelessWidget {
                               ),
 
                               Padding(
-                                padding: const EdgeInsets.fromLTRB(110, 015, 10, 0),
-
-                                child: TextField(
-                                  decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                                          borderSide: BorderSide(color: Colors.grey)),
-                                      hintText: ('Your Gender '),
-
-                                      labelStyle: TextStyle(
-                                          color: Colors.black, fontSize: 20),
-                                      hintStyle: TextStyle(color: Colors.black)),
-                                ),
+                                  padding: EdgeInsets.fromLTRB(110, 18, 10, 0),
+                                  child: GenderField(['Male','Female'])
                               ),
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(110, 15, 10, 0),
@@ -250,6 +238,44 @@ class ProfilePage extends StatelessWidget {
                     ]),
               ),
             )),
+      ),
+    );
+  }
+}
+
+
+class GenderField extends StatelessWidget {
+
+  final List<String> genderList;
+
+  GenderField(this.genderList);
+
+  @override
+  Widget build(BuildContext context) {
+    String select;
+    Map<int, String> mappedGender = genderList.asMap();
+
+    return StatefulBuilder(
+      builder: (_, StateSetter setState) => Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ...mappedGender.entries.map(
+                (MapEntry<int, String> mapEntry) => Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Radio(
+                    activeColor: Theme.of(context).primaryColor,
+                    groupValue: select,
+                    value: genderList[mapEntry.key],
+                    onChanged: (value) => setState(() => select = value),
+                  ),
+                  Text(mapEntry.value,)
+
+                ]),
+          ),
+        ],
       ),
     );
   }

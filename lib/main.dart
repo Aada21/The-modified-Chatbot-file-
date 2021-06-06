@@ -1,12 +1,11 @@
 //import 'dart:html';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:profile_page/AnimationList.dart';
 import 'package:profile_page/Diabetes.dart';
 import 'package:profile_page/ProfilePage.dart';
 import 'package:profile_page/SignUp.dart';
 import 'package:profile_page/chatbot.dart';
-import 'package:wc_form_validators/wc_form_validators.dart';
+
 import 'History.dart';
 import 'LogIn.dart';
 import 'SplashScreen.dart';
@@ -36,7 +35,6 @@ class DogBot extends StatelessWidget {
         ChatBot.id: (context) => ChatBot(),
         HistoryPage.id: (context) => HistoryPage(),
         Diabetes.id: (context) => Diabetes(),
-        AnimationList.id: (context) => AnimationList(),
       },
     );
   }

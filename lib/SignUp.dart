@@ -1,259 +1,233 @@
-import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:profile_page/db.dart';
 import 'package:wc_form_validators/wc_form_validators.dart';
 import 'LogIn.dart';
-import 'home_page.dart';
 
 void main() => runApp(MaterialApp(
-
-      debugShowCheckedModeBanner: false,
-      home: SignUp(),
-    ));
+  debugShowCheckedModeBanner: false,
+  home: SignUp(),
+));
 
 class SignUp extends StatefulWidget {
-  const SignUp({Key key}) : super(key: key);
-  static String id = 'SignUp';
+  SignUp({Key key}) : super(key: key);
+  static String id = 'Sign Up';
+
   @override
   _SignUpState createState() => _SignUpState();
 }
 
 class _SignUpState extends State<SignUp> {
-  final Future <FirebaseApp> _initialization =Firebase.initializeApp();
   final _auth = FirebaseAuth.instance;
-  String email,password,fName,lName;
-  // Map<String,String> userInfo=new Map();
+  String FirstName;
+  String LastName;
+  String email;
+  String password;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-
-    var mediaQueryData = MediaQuery.of(context);
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          width: screenWidth,
-          height: screenHeight,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-            image: AssetImage('images/Background.png'),
-            fit: BoxFit.fill,
-          )),
-          child: Stack(
-            children: [
-              Positioned(
-                top: 10,
-                left: screenWidth / 3,
-                width: screenWidth / 3.4,
-                height: screenHeight / 3,
-                child: Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage('images/patient.png')),
-                  ),
-                ),
-              ),
-
-              Positioned(
-                top: screenWidth / 2,
-                left: screenWidth / 4.9,
-                child: Container(
-                  child: Text(
-                    'Tameny Ya Doctor!',
-                    style: TextStyle(
-                        color: Colors.black87,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 25),
-                  ),
-                ),
-              ),
-              Positioned(
-                top: screenHeight / 2.5,
-                width: screenWidth / 2.7,
-                left: 30,
-                child: Container(
-                  padding: EdgeInsets.all(2),
-                  decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(.3),
-                      borderRadius: BorderRadius.circular(7),
-                      border: Border(
-                          bottom: BorderSide(color: Colors.white),
-                          top: BorderSide(color: Colors.white),
-                          left: BorderSide(color: Colors.white),
-                          right: BorderSide(color: Colors.white))),
-                  child: TextField(
-                    onChanged: (value) {
-                      fName = value;
-                    },
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: "  First Name",
-                        hintStyle: TextStyle(color: Colors.white)),
-                  ),
-                ),
-              ),
-              Positioned(
-                top: screenHeight / 2.5,
-                width: screenWidth / 2.7,
-                left: 200,
-                child: Container(
-                  padding: EdgeInsets.all(2),
-                  decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(.3),
-                      borderRadius: BorderRadius.circular(7),
-                      border: Border(
-                          bottom: BorderSide(color: Colors.white),
-                          top: BorderSide(color: Colors.white),
-                          left: BorderSide(color: Colors.white),
-                          right: BorderSide(color: Colors.white))),
-                  child: TextField(
-                    onChanged: (value) {
-                      lName = value;
-                    },
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: "  Last Name",
-                        hintStyle: TextStyle(color: Colors.white)),
-                  ),
-                ),
-              ),
-              Positioned(
-                top: screenHeight / 2,
-                width: screenWidth - 55,
-                left: 30,
-                height: 60,
-                child: Container(
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(.3),
-                      borderRadius: BorderRadius.circular(7),
-                      border: Border(
-                          bottom: BorderSide(color: Colors.white),
-                          top: BorderSide(color: Colors.white),
-                          left: BorderSide(color: Colors.white),
-                          right: BorderSide(color: Colors.white))),
-                  child: TextField(
-                    keyboardType: TextInputType.emailAddress,
-                    onChanged: (value) {
-                    email = value;
-                  },
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: "Email Address",
-                        hintStyle: TextStyle(color: Colors.white)),
-                  ),
-                ),
-              ),
-              Positioned(
-                top: screenHeight - 280,
-                width: screenWidth - 55,
-                left: 30,
-                height: 60,
-                child: Container(
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(.3),
-                      borderRadius: BorderRadius.circular(7),
-                      border: Border(
-                          bottom: BorderSide(color: Colors.white),
-                          top: BorderSide(color: Colors.white),
-                          left: BorderSide(color: Colors.white),
-                          right: BorderSide(color: Colors.white))),
-                  child: TextField(
-                    textAlign: TextAlign.left,
-                    obscureText: true,
-                    onChanged: (value) {
-                      password = value;
-                    },
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: "Password",
-                        hintStyle: TextStyle(color: Colors.white)),
-                  ),
-                ),
-              ),
-              Positioned(
-                height: screenHeight - 610,
-                top: screenHeight - 220,
-                width: screenWidth - 55,
-                left: screenWidth - 330,
-                child: Container(
+        backgroundColor: Colors.white,
+        body: SingleChildScrollView(
+          child: Container(
+            height: screenHeight,
+            width: screenWidth,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('images/Background.png'),
+                  fit: BoxFit.fill,
+                )),
+            child: SingleChildScrollView(
+              child: Stack(children: <Widget>[
+                Positioned(
+                  top: 170,
+                  left: 25,
                   width: screenWidth,
-                  padding: EdgeInsets.fromLTRB(30, 30, 30, 30),
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      try {
-                        final newUser =
-                        await _auth.createUserWithEmailAndPassword(
-                            email: email, password: password);
-                             var user = newUser.user;
-                              var map = {'fName':fName,'lName':lName ,'email': user.email,'phone':'','gender':'male'};
-
-                        await DatabaseService(uid: user.uid,info: map).updateUserProfile();
-
-
-                        if (newUser != null) {
-                          Navigator.pushNamed(context, HomePage.id);
-                        }
-                      } catch (e) {
-                        print(e.toString());
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                        primary: Color.fromRGBO(194, 78, 84, 1),
-                        padding: EdgeInsets.fromLTRB(110, 30, 100, 20)),
-                    child: Text('SignUp'),
-                  ),
-                ),
-              ),
-
-              //login button above first name
-              Positioned(
-                top: 220,
-                left: 10,
-                child: FlatButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, LogIn.id);
-                  },
-                  child: Text(
-                    'LogIn',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                      color: Colors.white,
+                  child: Container(
+                    padding: EdgeInsets.fromLTRB(50, 50, 50, 0),
+                    child: Text(
+                      'Tameny Ya Doctor!',
+                      style: TextStyle(
+                          color: Colors.black87,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 25),
                     ),
                   ),
                 ),
-              ),
-              //signup button above first name
-              Positioned(
-                top: 220,
-                left: 110,
-                child: FlatButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, SignUp.id);
-                  },
-                  child: Text(
-                    'Signup',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                      color: Colors.white,
+                Container(
+                  child: Column(children: [
+                    Container(
+                      padding: EdgeInsets.fromLTRB(80, 150, 50, 100),
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage('images/patient.png')),
+                      ),
                     ),
-                  ),
+                    Container(
+                      padding: EdgeInsets.fromLTRB(10, 5, 0, 0),
+                      child: Row(children: <Widget>[
+                        FlatButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, LogIn.id);
+                          },
+                          child: Text(
+                            'LogIn',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        FlatButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, SignUp.id);
+                          },
+                          child: Text(
+                            'SignUp',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17,
+                              color: Colors.white,
+                            ),
+                          ),
+                        )
+                      ]),
+                    ),
+                  ]),
                 ),
-              )
-            ],
+                Padding(
+                  padding: EdgeInsets.fromLTRB(30.0, 300.0, 30.0, 0.0),
+                  child: Stack(
+                    children: <Widget>[
+                      Form(
+                        key: _formKey,
+                        child: Column(
+                          children: <Widget>[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                                    child: TextFormField(
+                                      textAlign: TextAlign.start,
+                                      keyboardType: TextInputType.name,
+                                      onChanged: (value) {
+                                        FirstName = value;
+                                      },
+                                      decoration: InputDecoration(
+                                          labelText: "First Name ",
+                                          border: OutlineInputBorder(),
+                                          hintStyle:
+                                          TextStyle(color: Colors.white)),
+                                      // validator: validateText,
+                                      validator: Validators.compose([
+                                        Validators.required(
+                                            'Enter First Name '),
+                                        Validators.minLength(2, 'Too short'),
+                                        Validators.patternRegExp(
+                                            RegExp(r"^[A-Za-z]+$"),
+                                            'Only alphabets '),
+                                      ]),
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Container(
+                                    padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                    child: TextFormField(
+                                      textAlign: TextAlign.start,
+                                      keyboardType: TextInputType.name,
+                                      onChanged: (value) {
+                                        LastName = value;
+                                      },
+                                      decoration: InputDecoration(
+                                          labelText: "Last Name ",
+                                          border: OutlineInputBorder(),
+                                          hintStyle:
+                                          TextStyle(color: Colors.white)),
+                                      // validator: validateText,
+                                      validator: Validators.compose([
+                                        Validators.required('Enter Last Name '),
+                                        Validators.minLength(2, 'Too short'),
+                                        Validators.maxLength(10, 'Too long'),
+                                        Validators.patternRegExp(
+                                            RegExp(r"^[A-Za-z]+$"),
+                                            'Only alphabets'),
+                                      ]),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Container(
+                              padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                              child: TextFormField(
+                                textAlign: TextAlign.center,
+                                keyboardType: TextInputType.emailAddress,
+                                onChanged: (value) {
+                                  email = value;
+                                },
+                                decoration: InputDecoration(
+                                    labelText: "Email Address",
+                                    border: OutlineInputBorder(),
+                                    hintStyle: TextStyle(color: Colors.white)),
+                                // validator: validateText,
+                                validator: Validators.compose([
+                                  Validators.required('Email is required'),
+                                  Validators.email('Invalid email address'),
+                                ]),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+                              child: TextFormField(
+                                textAlign: TextAlign.center,
+                                obscureText: true,
+                                onChanged: (value) {
+                                  password = value;
+                                },
+                                decoration: InputDecoration(
+                                    labelText: "Password",
+                                    border: OutlineInputBorder(),
+                                    hintStyle: TextStyle(color: Colors.white)),
+                                validator: Validators.compose([
+                                  Validators.required('Password is required'),
+                                  Validators.minLength(
+                                      8, 'Characters are less than 8'),
+                                  Validators.maxLength(
+                                      15, 'Characters are greater than 15'),
+                                ]),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        width: screenWidth,
+                        padding: EdgeInsets.fromLTRB(0, 280, 0, 0),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            if (_formKey.currentState.validate()) {
+                              print("Form was submitted successfully.");
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                              primary: Color.fromRGBO(194, 78, 84, 1),
+                              padding: EdgeInsets.fromLTRB(110, 30, 100, 20)),
+                          child: Text('Sign Up'),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ]),
+            ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }
-
-
