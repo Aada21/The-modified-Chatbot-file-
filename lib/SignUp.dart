@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:profile_page/db.dart';
@@ -9,6 +10,7 @@ import 'LogIn.dart';
 import 'home_page.dart';
 
 void main() => runApp(MaterialApp(
+
       debugShowCheckedModeBanner: false,
       home: SignUp(),
     ));
@@ -21,13 +23,14 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  final Future <FirebaseApp> _initialization =Firebase.initializeApp();
   final _auth = FirebaseAuth.instance;
-  String email;
-  String password;
+  String email,password,fName,lName;
   // Map<String,String> userInfo=new Map();
 
   @override
   Widget build(BuildContext context) {
+
     var mediaQueryData = MediaQuery.of(context);
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
@@ -84,6 +87,9 @@ class _SignUpState extends State<SignUp> {
                           left: BorderSide(color: Colors.white),
                           right: BorderSide(color: Colors.white))),
                   child: TextField(
+                    onChanged: (value) {
+                      fName = value;
+                    },
                     decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: "  First Name",
@@ -106,6 +112,9 @@ class _SignUpState extends State<SignUp> {
                           left: BorderSide(color: Colors.white),
                           right: BorderSide(color: Colors.white))),
                   child: TextField(
+                    onChanged: (value) {
+                      lName = value;
+                    },
                     decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: "  Last Name",
@@ -183,16 +192,16 @@ class _SignUpState extends State<SignUp> {
                         await _auth.createUserWithEmailAndPassword(
                             email: email, password: password);
                              var user = newUser.user;
-                              var map = {'fName':'Ahmed' ,'email': user.email,'phone':user.displayName};
+                              var map = {'fName':fName,'lName':lName ,'email': user.email,'phone':'','gender':'male'};
 
-                        await DatabaseService(uid: user.uid,info: map).updateUserData();
-                        print("3666666"+newUser.toString());
+                        await DatabaseService(uid: user.uid,info: map).updateUserProfile();
+
 
                         if (newUser != null) {
                           Navigator.pushNamed(context, HomePage.id);
                         }
                       } catch (e) {
-                        print("55555555555555555555555"+e.toString());
+                        print(e.toString());
                       }
                     },
                     style: ElevatedButton.styleFrom(

@@ -146,7 +146,7 @@ class _LogInState extends State<LogIn> {
                                   textAlign: TextAlign.center,
                                   keyboardType: TextInputType.emailAddress,
                                   onChanged: (value) {
-                                    email = value;
+                                    email = value.trim();
                                   },
                                   decoration: InputDecoration(
                                       labelText: "Email Address",
@@ -167,7 +167,7 @@ class _LogInState extends State<LogIn> {
                                   textAlign: TextAlign.center,
                                   obscureText: true,
                                   onChanged: (value) {
-                                    password = value;
+                                    password = value.trim();
                                   },
                                   decoration: InputDecoration(
                                       labelText: "Password",
@@ -189,7 +189,17 @@ class _LogInState extends State<LogIn> {
                           width: size.width,
                           padding: EdgeInsets.fromLTRB(0, 40, 0, 0),
                           child: ElevatedButton(
-                            onPressed: () {
+                            onPressed: () async{
+                              try {
+                                final user = await _auth.signInWithEmailAndPassword(email: email, password: password);
+
+                                if (user != null) {
+                                  Navigator.pushNamed(context, HomePage.id);
+                                }
+
+                              } catch (e) {
+                                print(e);
+                              }
                               if (_formKey.currentState.validate()) {
                                 print("Form was submitted successfully.");
                               }
@@ -207,21 +217,16 @@ class _LogInState extends State<LogIn> {
                         SizedBox(
                           height: 90,
                         ),
-                        FlatButton(
-                          onPressed: () async {
-                            try {
-                              final user = await _auth.signInWithEmailAndPassword(
-                                  email: email, password: password);
-                              if (user != null) {
-                                Navigator.pushNamed(context, HomePage.id);
-                              }
-                            } catch (e) {
-                              print(e);
-                            }
-                          },
-                          child: Text(
-                            'Forgot Password?',
-                            style: TextStyle(color: Colors.white),
+
+                        Center(
+                          child: FlatButton(
+                            onPressed: ()  {
+
+                            },
+                            child: Text(
+                              'Forgot Password?',
+                              style: TextStyle(color: Colors.white),
+                            ),
                           ),
                         ),
                       ],
