@@ -1,6 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
+import 'package:profile_page/db.dart';
+
+import 'LogIn.dart';
 
 class ProfilePage extends StatelessWidget {
   static String id = 'Profile_page';
@@ -8,6 +12,13 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     double screenHeight2 = MediaQuery.of(context).size.height;
     double screenWidth2 = MediaQuery.of(context).size.width;
+    var User=FirebaseAuth.instance.currentUser.email;
+    final _auth = FirebaseAuth.instance;
+
+    Future<void> _signOut() async {
+      await FirebaseAuth.instance.signOut();
+    }
+
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -76,7 +87,7 @@ class ProfilePage extends StatelessWidget {
                                   height: 10.0,
                                 ),
                                 Text(
-                                  "Welcome User",
+                                  "Welcome, ${DatabaseService(uid:_auth.currentUser.uid).getData()}",
                                   style: TextStyle(
                                     fontSize: 22.0,
                                     color: Colors.black87,
@@ -216,9 +227,11 @@ class ProfilePage extends StatelessWidget {
 
                      ] ),
                       Row(
+
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
+
                             IconButton(
                               padding: EdgeInsets.all(30),
                               //back icon
@@ -226,8 +239,12 @@ class ProfilePage extends StatelessWidget {
                               color: Colors.black,
                               iconSize: 30.0,
                               onPressed: () {
-                                Navigator.pop(context);
-                              },
+
+
+
+     _signOut();
+                                 Navigator.pushNamed(context, LogIn.id);
+                        },
                             ),
                           ]),
                     ]),
