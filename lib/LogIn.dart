@@ -15,8 +15,6 @@ class LogIn extends StatefulWidget {
   LogIn({Key key}) : super(key: key);
   static String id = 'LogIn';
 
-
-
   @override
   _LogInState createState() => _LogInState();
 }
@@ -26,6 +24,7 @@ class _LogInState extends State<LogIn> {
   String email;
   String password;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -133,7 +132,7 @@ class _LogInState extends State<LogIn> {
                     child: Column(
                       children: <Widget>[
                         Form(
-                          key:_formKey,
+                          key: _formKey,
                           child: Column(
                             children: <Widget>[
                               Container(
@@ -143,14 +142,14 @@ class _LogInState extends State<LogIn> {
                                         bottom: BorderSide(
                                             color: Colors.grey[100]))),
                                 child: TextFormField(
-                                  textAlign: TextAlign.center,
+                                  textAlign: TextAlign.left,
                                   keyboardType: TextInputType.emailAddress,
                                   onChanged: (value) {
                                     email = value;
                                   },
                                   decoration: InputDecoration(
                                       labelText: "Email Address",
-                                      border: OutlineInputBorder() ,
+                                      border: OutlineInputBorder(),
                                       hintText: "Email",
                                       hintStyle:
                                           TextStyle(color: Colors.white)),
@@ -164,21 +163,24 @@ class _LogInState extends State<LogIn> {
                               Container(
                                 padding: EdgeInsets.all(8.0),
                                 child: TextFormField(
-                                  textAlign: TextAlign.center,
+                                  textAlign: TextAlign.left,
                                   obscureText: true,
                                   onChanged: (value) {
                                     password = value;
                                   },
                                   decoration: InputDecoration(
+                                      focusColor: Colors.white,
                                       labelText: "Password",
                                       border: OutlineInputBorder(),
                                       hintText: "Password",
-                                      hintStyle:
-                                          TextStyle(color: Colors.white)),
+                                      hintStyle: TextStyle(
+                                          color: Colors.white, fontSize: 15)),
                                   validator: Validators.compose([
                                     Validators.required('Password is required'),
-                                    Validators.minLength(8, 'Characters are less than 8'),
-                                  Validators.maxLength(15, 'Characters are greater than 15'),
+                                    Validators.minLength(
+                                        8, 'Characters are less than 8'),
+                                    Validators.maxLength(
+                                        15, 'Characters are greater than 15'),
                                   ]),
                                 ),
                               )
@@ -210,8 +212,9 @@ class _LogInState extends State<LogIn> {
                         FlatButton(
                           onPressed: () async {
                             try {
-                              final user = await _auth.signInWithEmailAndPassword(
-                                  email: email, password: password);
+                              final user =
+                                  await _auth.signInWithEmailAndPassword(
+                                      email: email, password: password);
                               if (user != null) {
                                 Navigator.pushNamed(context, HomePage.id);
                               }
@@ -232,7 +235,6 @@ class _LogInState extends State<LogIn> {
             ),
           ),
         ));
-
   }
 }
 // String validateText(String formText) {
