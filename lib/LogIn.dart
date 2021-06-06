@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:profile_page/home_page.dart';
-
+import 'package:wc_form_validators/wc_form_validators.dart';
 import 'SignUp.dart';
 
 void main() => runApp(MaterialApp(
@@ -12,8 +12,10 @@ void main() => runApp(MaterialApp(
     ));
 
 class LogIn extends StatefulWidget {
-  const LogIn({Key key}) : super(key: key);
+  LogIn({Key key}) : super(key: key);
   static String id = 'LogIn';
+
+
 
   @override
   _LogInState createState() => _LogInState();
@@ -23,6 +25,7 @@ class _LogInState extends State<LogIn> {
   final _auth = FirebaseAuth.instance;
   String email;
   String password;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -99,9 +102,9 @@ class _LogInState extends State<LogIn> {
                         ]),
                       ),
                       Padding(
-                        padding: EdgeInsets.fromLTRB(20, 20, 20, 10),
+                        padding: EdgeInsets.fromLTRB(20, 50, 20, 7),
                         child: Container(
-                          padding: EdgeInsets.fromLTRB(10, 50, 10, 010),
+                          padding: EdgeInsets.fromLTRB(10, 50, 10, 7),
                           child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -129,17 +132,8 @@ class _LogInState extends State<LogIn> {
                     padding: EdgeInsets.fromLTRB(30.0, 250.0, 30.0, 0.0),
                     child: Column(
                       children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
-                          decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(.3),
-                              borderRadius: BorderRadius.circular(5),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Color.fromRGBO(143, 148, 251, .2),
-                                    blurRadius: 10.0,
-                                    offset: Offset(0, 10))
-                              ]),
+                        Form(
+                          key:_formKey,
                           child: Column(
                             children: <Widget>[
                               Container(
@@ -148,33 +142,44 @@ class _LogInState extends State<LogIn> {
                                     border: Border(
                                         bottom: BorderSide(
                                             color: Colors.grey[100]))),
-                                child: TextField(
+                                child: TextFormField(
                                   textAlign: TextAlign.center,
                                   keyboardType: TextInputType.emailAddress,
                                   onChanged: (value) {
                                     email = value;
                                   },
                                   decoration: InputDecoration(
-                                      border: InputBorder.none,
+                                      labelText: "Email Address",
+                                      border: OutlineInputBorder() ,
                                       hintText: "Email",
                                       hintStyle:
                                           TextStyle(color: Colors.white)),
+                                  // validator: validateText,
+                                  validator: Validators.compose([
+                                    Validators.required('Email is required'),
+                                    Validators.email('Invalid email address'),
+                                  ]),
                                 ),
                               ),
                               Container(
                                 padding: EdgeInsets.all(8.0),
-                                child: TextField(
+                                child: TextFormField(
                                   textAlign: TextAlign.center,
                                   obscureText: true,
                                   onChanged: (value) {
                                     password = value;
                                   },
                                   decoration: InputDecoration(
-
-                                      border: InputBorder.none,
+                                      labelText: "Password",
+                                      border: OutlineInputBorder(),
                                       hintText: "Password",
                                       hintStyle:
                                           TextStyle(color: Colors.white)),
+                                  validator: Validators.compose([
+                                    Validators.required('Password is required'),
+                                    Validators.minLength(8, 'Characters are less than 8'),
+                                  Validators.maxLength(15, 'Characters are greater than 15'),
+                                  ]),
                                 ),
                               )
                             ],
@@ -185,7 +190,9 @@ class _LogInState extends State<LogIn> {
                           padding: EdgeInsets.fromLTRB(0, 40, 0, 0),
                           child: ElevatedButton(
                             onPressed: () {
-
+                              if (_formKey.currentState.validate()) {
+                                print("Form was submitted successfully.");
+                              }
                             },
                             style: ElevatedButton.styleFrom(
                                 primary: Color.fromRGBO(194, 78, 84, 1),
@@ -225,5 +232,11 @@ class _LogInState extends State<LogIn> {
             ),
           ),
         ));
+
   }
 }
+// String validateText(String formText) {
+//   if (formText.isEmpty) return 'Field is required.';
+//
+//   return null;
+// }

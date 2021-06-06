@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:profile_page/db.dart';
-
+import 'package:wc_form_validators/wc_form_validators.dart';
 import 'LogIn.dart';
 import 'home_page.dart';
 
