@@ -1,9 +1,19 @@
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:imagebutton/imagebutton.dart';
 import 'package:profile_page/AnimationList.dart';
+import 'package:profile_page/PdfPreviewScreen.dart';
 import 'chatbot.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:flutter_full_pdf_viewer/flutter_full_pdf_viewer.dart';
+import 'package:flutter_full_pdf_viewer/full_pdf_viewer_plugin.dart';
+import 'package:flutter_full_pdf_viewer/full_pdf_viewer_scaffold.dart';
+
+
 
 class HistoryPage extends StatefulWidget {
   static String id = 'History_page';
@@ -13,6 +23,44 @@ class HistoryPage extends StatefulWidget {
 }
 
 class _HistoryPageState extends State<HistoryPage> {
+  final pdf = pw.Document();
+  TextEditingController historyController =  TextEditingController();
+  writeOnPdf(){
+
+    pdf.addPage(
+        pw.MultiPage(
+          pageFormat: PdfPageFormat.a5,
+          margin: pw.EdgeInsets.all(32),
+          maxPages: 5,
+          build: (pw.Context context){
+            return <pw.Widget>  [
+              pw.Header(
+                  level: 0,
+                  child: pw.Text("History document.")
+              ),
+
+              pw.Paragraph(
+                  text: (historyController.text)
+              ),
+
+            ];
+          },
+
+
+        )
+    );
+  }
+
+  Future savePdf() async{
+    Directory documentDirectory = await getApplicationDocumentsDirectory();
+
+    String documentPath = documentDirectory.path;
+
+    File file = File("$documentPath/History.pdf");
+
+    file.writeAsBytesSync(pdf.save());
+
+  }
   @override
   Widget build(BuildContext context) {
     var mediaQueryData = MediaQuery.of(context);
@@ -86,13 +134,14 @@ class _HistoryPageState extends State<HistoryPage> {
                       child: Column(
                         children: [
                           TextField(
+                            controller: historyController,
                             //The text field to which the medical history will be added
                             keyboardType: TextInputType.multiline,
                             maxLines: 15,
                             decoration: InputDecoration(
                               contentPadding: //EdgeInsets.fromLTRB(15, 222, 15, 2),
-                                  EdgeInsetsDirectional.fromSTEB(
-                                      10, 124, 30, 208),
+                              EdgeInsetsDirectional.fromSTEB(
+                                  10, 124, 30, 208),
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
                                   borderSide: BorderSide(
@@ -130,7 +179,20 @@ class _HistoryPageState extends State<HistoryPage> {
                           "images/pdf1.png",
                         ),
                         onTap: () {
-                          print('02000');
+                          setState(() async{
+                            writeOnPdf();
+                            await savePdf();
+
+                            Directory documentDirectory = await getApplicationDocumentsDirectory();
+
+                            String documentPath = documentDirectory.path;
+
+                            String fullPath = "$documentPath/History.pdf";
+
+                            Navigator.push(context, MaterialPageRoute(
+                                builder: (context) => PdfPreviewScreen(path: fullPath,)
+                            ));
+                          });
                         },
                       ),
                       ImageButton(
