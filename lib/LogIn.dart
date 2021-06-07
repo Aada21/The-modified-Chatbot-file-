@@ -125,7 +125,7 @@ class _LogInState extends State<LogIn> {
                                 ),
                               ]),
                         ),
-                      ),
+                        ),
                     ]),
                   ),
                   Padding(
@@ -143,6 +143,7 @@ class _LogInState extends State<LogIn> {
                                         bottom: BorderSide(
                                             color: Colors.grey[100]))),
                                 child: TextFormField(
+                                  autofocus: true,
                                   textAlign: TextAlign.center,
                                   keyboardType: TextInputType.emailAddress,
                                   onChanged: (value) {

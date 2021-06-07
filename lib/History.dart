@@ -13,6 +13,8 @@ import 'package:flutter_full_pdf_viewer/flutter_full_pdf_viewer.dart';
 import 'package:flutter_full_pdf_viewer/full_pdf_viewer_plugin.dart';
 import 'package:flutter_full_pdf_viewer/full_pdf_viewer_scaffold.dart';
 
+
+
 class HistoryPage extends StatefulWidget {
   static String id = 'History_page';
 
@@ -22,13 +24,14 @@ class HistoryPage extends StatefulWidget {
 
 class _HistoryPageState extends State<HistoryPage> {
   final pdf = pw.Document();
-  TextEditingController historyController = new TextEditingController();
+  TextEditingController historyController =  TextEditingController();
   writeOnPdf(){
+
     pdf.addPage(
         pw.MultiPage(
           pageFormat: PdfPageFormat.a5,
           margin: pw.EdgeInsets.all(32),
-
+          maxPages: 5,
           build: (pw.Context context){
             return <pw.Widget>  [
               pw.Header(
@@ -37,8 +40,9 @@ class _HistoryPageState extends State<HistoryPage> {
               ),
 
               pw.Paragraph(
-                  text:historyController.text
+                text: (historyController.text)
               ),
+
             ];
           },
 
@@ -55,6 +59,7 @@ class _HistoryPageState extends State<HistoryPage> {
     File file = File("$documentPath/History.pdf");
 
     file.writeAsBytesSync(pdf.save());
+
   }
   @override
   Widget build(BuildContext context) {
@@ -173,19 +178,21 @@ class _HistoryPageState extends State<HistoryPage> {
                         unpressedImage: Image.asset(
                           "images/pdf1.png",
                         ),
-                        onTap: ()async {
-                          writeOnPdf();
-                          await savePdf();
+                        onTap: () {
+                            setState(() async{
+                              writeOnPdf();
+                              await savePdf();
 
-                          Directory documentDirectory = await getApplicationDocumentsDirectory();
+                              Directory documentDirectory = await getApplicationDocumentsDirectory();
 
-                          String documentPath = documentDirectory.path;
+                              String documentPath = documentDirectory.path;
 
-                          String fullPath = "$documentPath/History.pdf";
+                              String fullPath = "$documentPath/History.pdf";
 
-                          Navigator.push(context, MaterialPageRoute(
-                              builder: (context) => PdfPreviewScreen(path: fullPath,)
-                          ));
+                              Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) => PdfPreviewScreen(path: fullPath,)
+                              ));
+                            });
                         },
                       ),
                       ImageButton(
