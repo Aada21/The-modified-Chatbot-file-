@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 
 class DatabaseService {
   final String uid;
-  String s;
   Map<String,String> info=new Map();
   DatabaseService( {this.uid,this.info});
 
@@ -19,9 +17,8 @@ class DatabaseService {
   Future updateUserProfile() async {
     return await profileCollection.doc(uid).set(info);
   }
-  Future<String> getData() async{
-final   data=await FirebaseFirestore.instance.collection('Profile').doc(uid).get().then((value) => value.data()['fName']);
-s=data.toString();
-  return s;
+  void  getData() async{
+final   data= (await FirebaseFirestore.instance.collection('Profile').doc(uid).get());
+  print(data.data()['fName']);
 }
 }

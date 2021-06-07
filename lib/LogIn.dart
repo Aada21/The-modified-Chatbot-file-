@@ -190,9 +190,17 @@ class _LogInState extends State<LogIn> {
                           width: size.width,
                           padding: EdgeInsets.fromLTRB(0, 40, 0, 0),
                           child: ElevatedButton(
-                            onPressed: () {
+                            onPressed: () async{
                               if (_formKey.currentState.validate()) {
                                 print("Form was submitted successfully.");
+                                try {
+                                  final user = await _auth.signInWithEmailAndPassword(email: email, password: password);
+                                  if (user != null) {
+                                    Navigator.pushNamed(context, HomePage.id);
+                                  }
+                                } catch (e) {
+                                  print(e);
+                                }
                               }
                             },
                             style: ElevatedButton.styleFrom(
@@ -209,16 +217,8 @@ class _LogInState extends State<LogIn> {
                           height: 90,
                         ),
                         FlatButton(
-                          onPressed: () async {
-                            try {
-                              final user = await _auth.signInWithEmailAndPassword(
-                                  email: email, password: password);
-                              if (user != null) {
-                                Navigator.pushNamed(context, HomePage.id);
-                              }
-                            } catch (e) {
-                              print(e);
-                            }
+                          onPressed: ()  {
+
                           },
                           child: Text(
                             'Forgot Password?',

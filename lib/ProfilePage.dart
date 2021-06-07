@@ -87,7 +87,7 @@ class ProfilePage extends StatelessWidget {
                                   height: 10.0,
                                 ),
                                 Text(
-                                  "Welcome, ${DatabaseService(uid:_auth.currentUser.uid).getData()}",
+                                  "Welcome, ${User}",
                                   style: TextStyle(
                                     fontSize: 22.0,
                                     color: Colors.black87,
@@ -227,10 +227,7 @@ class ProfilePage extends StatelessWidget {
                               color: Colors.black,
                               iconSize: 30.0,
                               onPressed: () {
-
-
-
-     _signOut();
+                                  _signOut();
                                  Navigator.pushNamed(context, LogIn.id);
                         },
                             ),
