@@ -87,7 +87,6 @@ class _SignUpState extends State<SignUp> {
                           left: BorderSide(color: Colors.white),
                           right: BorderSide(color: Colors.white))),
                   child: TextField(
-                    autofocus: true,
                     onChanged: (value) {
                       fName = value;
                     },

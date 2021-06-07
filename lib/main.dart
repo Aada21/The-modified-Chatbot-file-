@@ -6,10 +6,12 @@ import 'package:profile_page/Diabetes.dart';
 import 'package:profile_page/ProfilePage.dart';
 import 'package:profile_page/SignUp.dart';
 import 'package:profile_page/chatbot.dart';
+import 'package:wc_form_validators/wc_form_validators.dart';
 import 'History.dart';
 import 'LogIn.dart';
 import 'SplashScreen.dart';
 import 'home_page.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
