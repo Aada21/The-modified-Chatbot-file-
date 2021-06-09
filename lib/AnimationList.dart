@@ -30,7 +30,7 @@ class _MyHomePageState extends State<MyHomePage>
   AnimationController controller;
   Animation _animation;
   final key = GlobalKey<AnimatedListState>();
- List<String> _items = ["items 1", "items 2", "items 3", "items 4"];
+  List<String> _items = ["items 1", "items 2", "items 3", "items 4"];
   @override
   void initState() {
     // TODO: implement initState

@@ -1,11 +1,19 @@
-
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:imagebutton/imagebutton.dart';
+import 'package:profile_page/AnimationList.dart';
+import 'package:profile_page/PdfPreviewScreen.dart';
 import 'chatbot.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:flutter_full_pdf_viewer/flutter_full_pdf_viewer.dart';
+import 'package:flutter_full_pdf_viewer/full_pdf_viewer_plugin.dart';
+import 'package:flutter_full_pdf_viewer/full_pdf_viewer_scaffold.dart';
 import 'package:intl/intl.dart';
+
 class HistoryPage extends StatefulWidget {
   static String id = 'History_page';
   @override
