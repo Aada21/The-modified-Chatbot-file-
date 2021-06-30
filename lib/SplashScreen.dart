@@ -1,6 +1,9 @@
 import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:profile_page/LogIn.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:profile_page/SignUp.dart';
+import 'package:profile_page/home_page.dart';
 
 
 class SplashScreen extends StatefulWidget {
@@ -16,8 +19,17 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(Duration(seconds: 5), () {
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (_) => LogIn()));
+          if(FirebaseAuth.instance.currentUser!=null)
+          {
+            Navigator.of(context)
+                .pushReplacement(MaterialPageRoute(builder: (_) =>HomePage()));
+          }
+          else
+          {
+            Navigator.of(context)
+                .pushReplacement(MaterialPageRoute(builder: (_) =>SignUp()));
+          }
+
     });
   }
 
@@ -41,11 +53,14 @@ class _SplashScreenState extends State<SplashScreen> {
                 height: 120,
               ),
               SizedBox(
-                height: 20,
+                height: 30,
               ),
-              CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-              ),
+
+              SpinKitPulse(
+                  color: Colors.white,
+                  size: 50,
+                ),
+
           ],
           ),
         ),

@@ -1,18 +1,42 @@
+import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
 import 'package:profile_page/db.dart';
 
 import 'LogIn.dart';
+import 'loading.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   static String id = 'Profile_page';
+
+  @override
+  _ProfilePageState createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+
+    var d;
+
+
+  @override
+  void initState()  {
+    super.initState();
+
+
+  }
+
+
   @override
   Widget build(BuildContext context) {
     double screenHeight2 = MediaQuery.of(context).size.height;
     double screenWidth2 = MediaQuery.of(context).size.width;
-    var User=FirebaseAuth.instance.currentUser.email;
+    var User=FirebaseAuth.instance.currentUser.displayName;
     final _auth = FirebaseAuth.instance;
 
     Future<void> _signOut() async {
@@ -21,6 +45,7 @@ class ProfilePage extends StatelessWidget {
 
     return Scaffold(
       body: SafeArea(
+
         child: Container(
             width: screenWidth2,
             height: screenHeight2,
@@ -86,12 +111,23 @@ class ProfilePage extends StatelessWidget {
                                 SizedBox(
                                   height: 10.0,
                                 ),
-                                Text(
-                                  "Welcome, ${User}",
-                                  style: TextStyle(
-                                    fontSize: 22.0,
-                                    color: Colors.black87,
-                                  ),
+
+                                StreamBuilder(
+                                  stream: FirebaseFirestore.instance.collection('Profile').doc(_auth.currentUser.uid).snapshots(),
+                                  builder: (context, snapshot) {
+                                    if(!snapshot.hasData)
+                                      {
+                                        return Center(
+                                            child:Loading());
+                                      }
+                                    return Text(
+                                      "Welcome ${snapshot.data['fName']}",
+                                      style: TextStyle(
+                                        fontSize: 22.0,
+                                        color: Colors.black87,
+                                      ),
+                                    );
+                                  }
                                 ),
                                 SizedBox(
                                   height: 40.0,
@@ -101,68 +137,81 @@ class ProfilePage extends StatelessWidget {
                       ),
                       Stack(
                         children: [
-                        Column(
-                            // mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                                 Padding(
-                                   //Name
-                                   padding: const EdgeInsets.fromLTRB(110, 0, 10, 0),
-                                   child: TextField(
-                                    decoration: InputDecoration(
+                        StreamBuilder(
 
-                                        border: InputBorder.none,
-                                        focusedBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                                            borderSide: BorderSide(color: Colors.grey)),
-                                            hintText: ('Your Name '),
-                                        labelStyle: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 20,
-                                        ),
-                                        hintStyle:
-                                            TextStyle(color: Colors.black)),
+                          stream: FirebaseFirestore.instance.collection('Profile').doc(_auth.currentUser.uid).snapshots(),
+                          builder: (context, snapshot) {
+                            if (!snapshot.hasData) {
+                              return Center(
+                                  child: Loading());
+                            }
+                            return Column(
+                                // mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+
+                                     Padding(
+                                       //Name
+
+                                       padding: const EdgeInsets.fromLTRB(110, 0, 10, 0),
+                                       child:  Text('${snapshot.data['fName']}'
+                                            // decoration: InputDecoration(
+                                            //     border: InputBorder.none,
+                                            //     focusedBorder: OutlineInputBorder(
+                                            //         borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                            //         borderSide: BorderSide(color: Colors.grey)),
+                                            //         hintText: ('Your Name '),
+                                            //     labelStyle: TextStyle(
+                                            //       color: Colors.black,
+                                            //       fontSize: 20,
+                                            //     ),
+                                            //     hintStyle:
+                                            //         TextStyle(color: Colors.black)),
+                                      )
+
+                                    ),
+
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(110, 12, 10, 0),
+
+                                    child: Text(
+                                      "${snapshot.data['gender']}"
+                                      // keyboardType: TextInputType.number,
+                                      // decoration: InputDecoration(
+                                      //     border: InputBorder.none,
+                                      //     focusedBorder: OutlineInputBorder(
+                                      //         borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                      //         borderSide: BorderSide(color: Colors.grey)),
+                                      //     hintText: ('Your Phone '),
+                                      //     labelStyle: TextStyle(
+                                      //         color: Colors.black, fontSize: 20),
+                                      //     hintStyle: TextStyle(color: Colors.black)),
+                                    ),
                                   ),
-                                ),
 
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(110, 12, 10, 0),
-
-                                child: TextField(
-                                  keyboardType: TextInputType.number,
-                                  decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                                          borderSide: BorderSide(color: Colors.grey)),
-                                      hintText: ('Your Phone '),
-                                      labelStyle: TextStyle(
-                                          color: Colors.black, fontSize: 20),
-                                      hintStyle: TextStyle(color: Colors.black)),
-                                ),
-                              ),
-
-                              Padding(
-                                  padding: EdgeInsets.fromLTRB(110, 18, 10, 0),
-                                  child: GenderField(['Male','Female'])
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(110, 15, 10, 0),
-                                child: TextField(
-                                  keyboardType: TextInputType.number,
-                                  inputFormatters: [DateInputFormatter()],
-                                  decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                                          borderSide: BorderSide(color: Colors.grey)),
-                                      hintText: ('--/--/---- '),
-                                      labelStyle: TextStyle(
-                                          color: Colors.black, fontSize: 20),
-                                      hintStyle: TextStyle(color: Colors.black)),
-                                ),
-                              ),
-                            ]),
+                                  Padding(
+                                      padding: EdgeInsets.fromLTRB(110, 18, 10, 0),
+                                      child: GenderField(['Male','Female'])
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(110, 15, 10, 0),
+                                    child: TextField(
+                                      keyboardType: TextInputType.number,
+                                      inputFormatters: [DateInputFormatter()],
+                                      decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          focusedBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                              borderSide: BorderSide(color: Colors.grey)),
+                                          hintText: ('--/--/----'),
+                                          labelStyle: TextStyle(
+                                              color: Colors.black, fontSize: 20),
+                                          hintStyle: TextStyle(color: Colors.black)),
+                                    ),
+                                  ),
+                                ]);
+                          }
+                        ),
                           Column(
                             children: [
                               Padding(
@@ -240,7 +289,6 @@ class ProfilePage extends StatelessWidget {
   }
 }
 
-
 class GenderField extends StatelessWidget {
 
   final List<String> genderList;
@@ -276,4 +324,11 @@ class GenderField extends StatelessWidget {
       ),
     );
   }
+
+}
+ getData(var id) async {
+  final data = await FirebaseFirestore.instance.collection('Profile').doc(id).get();
+
+
+return await data.data()['fName'];
 }

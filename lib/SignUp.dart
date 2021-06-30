@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:profile_page/History.dart';
 import 'package:profile_page/db.dart';
 import 'package:wc_form_validators/wc_form_validators.dart';
 import 'LogIn.dart';
@@ -228,15 +229,29 @@ class _SignUpState extends State<SignUp> {
                                   'phone': '',
                                   'gender': 'male'
                                 };
-
-                                await DatabaseService(uid: user.uid, info: map)
-                                    .updateUserProfile();
-
+                                var mapHistory = {
+                                  'H':[]
+                                };
+                                var mapDrugs = {
+                                  'D':[]
+                                };
+                                 await DatabaseService(uid: user.uid, info: map,history:mapHistory,drugs: mapDrugs).init();
                                 if (newUser != null) {
+
                                   Navigator.pushNamed(context, HomePage.id);
                                 }
-                              } catch (e) {
-                                print(e.toString());
+                              } on FirebaseAuthException catch (e) {
+                                final snackBar = SnackBar(
+                                  content: Text(e.message),
+                                  action: SnackBarAction(
+                                    label: 'ok',
+                                    onPressed: () {
+                                      // Some code to undo the change.
+                                    },
+                                  ),
+                                );
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
                               }
                             }
                           },

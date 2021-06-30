@@ -1,29 +1,39 @@
+import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:imagebutton/imagebutton.dart';
-import 'Diabetes.dart';
+import 'Drugs.dart';
+import 'LogIn.dart';
 import 'ProfilePage.dart';
 import 'chatbot.dart';
 import 'package:intl/intl.dart';
 
+import 'db.dart';
 import 'home_page.dart';
 
 class HistoryPage extends StatefulWidget {
   static String id = 'History_page';
+
   @override
   _HistoryPageState createState() => _HistoryPageState();
 }
 
 class _HistoryPageState extends State<HistoryPage> {
-  List<String> _items = [];
+   List<dynamic> items = LogIn.list;
+
   Animation _animation;
   final key = GlobalKey<AnimatedListState>();
   String _setDate = '';
   String _dis = '';
   TextEditingController _dateController = TextEditingController();
   DateTime selectedDate = DateTime.now();
+
+  var uid=FirebaseAuth.instance.currentUser.uid;
+
   //fun.of date.
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
@@ -76,7 +86,7 @@ class _HistoryPageState extends State<HistoryPage> {
                               children: [
                                 Padding(
                                   padding:
-                                      const EdgeInsets.fromLTRB(60, 15, 10, 0),
+                                  const EdgeInsets.fromLTRB(60, 15, 10, 0),
                                   child: Text(
                                     'Enter A Diseases ',
                                     style: TextStyle(
@@ -89,7 +99,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                 ),
                                 Padding(
                                   padding:
-                                      const EdgeInsets.fromLTRB(10, 30, 10, 0),
+                                  const EdgeInsets.fromLTRB(10, 30, 10, 0),
                                   child: Text(
                                     'Disease Name :',
                                     style: TextStyle(
@@ -102,7 +112,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                 ),
                                 Padding(
                                   padding:
-                                      const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                                  const EdgeInsets.fromLTRB(0, 20, 0, 0),
                                   child: TextField(
                                     onChanged: (value) {
                                       _dis = value.trim();
@@ -110,28 +120,28 @@ class _HistoryPageState extends State<HistoryPage> {
                                     decoration: InputDecoration(
                                         enabledBorder: UnderlineInputBorder(
                                           borderSide:
-                                              BorderSide(color: Colors.white),
+                                          BorderSide(color: Colors.white),
                                           borderRadius:
-                                              BorderRadius.circular(10),
+                                          BorderRadius.circular(10),
                                         ),
                                         border: InputBorder.none,
                                         filled: true,
                                         fillColor: Colors.white,
                                         focusedBorder: OutlineInputBorder(
                                             borderRadius:
-                                                BorderRadius.circular(10),
+                                            BorderRadius.circular(10),
                                             borderSide: BorderSide(
                                                 color: Colors.white)),
                                         hintText: ('Diabetes'),
                                         labelStyle: TextStyle(
                                             color: Colors.black, fontSize: 20),
                                         hintStyle:
-                                            TextStyle(color: Colors.black)),
+                                        TextStyle(color: Colors.black)),
                                   ),
                                 ),
                                 Padding(
                                   padding:
-                                      const EdgeInsets.fromLTRB(10, 15, 10, 0),
+                                  const EdgeInsets.fromLTRB(10, 15, 10, 0),
                                   child: Text(
                                     'Date :',
                                     style: TextStyle(
@@ -165,7 +175,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                         decoration: BoxDecoration(
                                           color: Colors.white,
                                           borderRadius:
-                                              BorderRadius.circular(10.0),
+                                          BorderRadius.circular(10.0),
                                         ),
                                         child: TextFormField(
                                           style: TextStyle(fontSize: 40),
@@ -178,15 +188,15 @@ class _HistoryPageState extends State<HistoryPage> {
                                           },
                                           decoration: InputDecoration(
                                               hintText:
-                                                  DateFormat.yMMMM('en_US')
-                                                      .format(selectedDate),
+                                              DateFormat.yMMMM('en_US')
+                                                  .format(selectedDate),
                                               disabledBorder:
-                                                  UnderlineInputBorder(
-                                                      borderSide:
-                                                          BorderSide.none),
+                                              UnderlineInputBorder(
+                                                  borderSide:
+                                                  BorderSide.none),
                                               // labelText: 'Time',
                                               contentPadding:
-                                                  EdgeInsets.only(top: 0.0)),
+                                              EdgeInsets.only(top: 0.0)),
                                         ),
                                       ),
                                     ),
@@ -195,7 +205,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                 //date here
                                 Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  MainAxisAlignment.spaceBetween,
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.fromLTRB(
@@ -209,18 +219,19 @@ class _HistoryPageState extends State<HistoryPage> {
                                             onPrimary: Colors.black,
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(20.0),
+                                              BorderRadius.circular(20.0),
                                             )),
                                         child: Text('Cancel'),
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          30, 110, 30, 0),
+                                      padding: const EdgeInsets.fromLTRB(30, 110, 30, 0),
                                       child: ElevatedButton(
-                                        onPressed: () {
+                                        onPressed: () async {
+
                                           if (_dis.isNotEmpty) {
                                             addItem(_dis);
+                                            await DatabaseService(uid: uid,history: {'H':items}).updateUserData();
                                             Navigator.pop(context);
                                             _dis = '';
                                           }
@@ -230,7 +241,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                             onPrimary: Colors.black,
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(20.0),
+                                              BorderRadius.circular(20.0),
                                             )),
                                         child: Text('Submit'),
                                       ),
@@ -246,7 +257,7 @@ class _HistoryPageState extends State<HistoryPage> {
         transitionBuilder: (_, anim, __, child) {
           return SlideTransition(
             position:
-                Tween(begin: Offset(0, 1), end: Offset(0, 0)).animate(anim),
+            Tween(begin: Offset(0, 1), end: Offset(0, 0)).animate(anim),
             child: child,
           );
         },
@@ -265,7 +276,7 @@ class _HistoryPageState extends State<HistoryPage> {
             },
           )
         ],
-        title: const Text('                Home'),
+        title: Center(child: const Text('History')),
       ),
       drawer: Drawer(
         child: ListView(
@@ -369,7 +380,7 @@ class _HistoryPageState extends State<HistoryPage> {
                     title: FlatButton(
                       padding: EdgeInsets.fromLTRB(0, 0, 140, 0),
                       onPressed: () {
-                        Navigator.pushNamed(context, Diabetes.id);
+                        Navigator.pushNamed(context, Drugs.id);
                       },
                       child: Text(
                         'Drugs',
@@ -391,7 +402,7 @@ class _HistoryPageState extends State<HistoryPage> {
                         "images/drugs.png",
                       ),
                       onTap: () {
-                        Navigator.pushNamed(context, Diabetes.id);
+                        Navigator.pushNamed(context, Drugs.id);
                         print('666');
                       },
                     ),
@@ -476,19 +487,32 @@ class _HistoryPageState extends State<HistoryPage> {
                   return Container(
                     width: localWidth - 20,
                     height: localHeight - 10,
-                    child: Column(
-                      children: [
-                        Expanded(
-                            child: AnimatedList(
-                          key: key,
-                          initialItemCount: _items.length,
-                          itemBuilder: (context, int index,
-                              Animation<double> animation) {
-                            return buildItem(_items[index], animation, index);
-                          },
-                        ))
-                      ],
-                    ),
+                    child: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+                        stream: FirebaseFirestore.instance
+                            .collection('History')
+                            .doc(FirebaseAuth.instance.currentUser.uid)
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            return Center(
+                                child: CircularProgressIndicator());
+                          }
+                          items = snapshot.data['H'];
+                          return Column(
+                            children: [
+                              Expanded(
+                                  child: AnimatedList(
+                                    key: key,
+                                    initialItemCount: items.length,
+                                    itemBuilder: (context, int index,
+                                        Animation<double> animation) {
+                                      return buildItem(
+                                          items[index], animation, index);
+                                    },
+                                  ))
+                            ],
+                          );
+                        }),
                   );
                 }),
               ),
@@ -509,8 +533,9 @@ class _HistoryPageState extends State<HistoryPage> {
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           trailing: IconButton(
-            onPressed: () {
+            onPressed: () async {
               removeItem(index);
+              await FirebaseFirestore.instance.collection('History').doc(FirebaseAuth.instance.currentUser.uid).set({'H':items});
             },
             icon: Icon(
               Icons.close,
@@ -523,7 +548,7 @@ class _HistoryPageState extends State<HistoryPage> {
   }
 
   removeItem(int index) {
-    String removeItemed = _items.removeAt(index);
+    String removeItemed = items.removeAt(index);
     AnimatedListRemovedItemBuilder builder = (context, animation) {
       return buildItem(removeItemed, animation, index);
     };
@@ -531,11 +556,13 @@ class _HistoryPageState extends State<HistoryPage> {
   }
 
   void addItem(String x) {
-    int i = _items.length > 0 ? _items.length : 0;
-    _items.insert(i,
+    int i = items.length > 0 ? items.length : 0;
+    items.insert(i,
         "$_dis \n${DateFormat.MMMM().format(selectedDate)}/${selectedDate.year}");
     key.currentState.insertItem(i);
   }
+
+
 }
 
 DeviceType getDeviceType(MediaQueryData mediaQueryData) {

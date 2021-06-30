@@ -1,3 +1,6 @@
+
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -5,7 +8,9 @@ import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:profile_page/home_page.dart';
 import 'package:wc_form_validators/wc_form_validators.dart';
 import 'SignUp.dart';
+import 'package:get/get.dart';
 
+import 'db.dart';
 void main() => runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
       home: LogIn(),
@@ -14,6 +19,7 @@ void main() => runApp(MaterialApp(
 class LogIn extends StatefulWidget {
   LogIn({Key key}) : super(key: key);
   static String id = 'LogIn';
+  static List<dynamic> list;
 
 
 
@@ -185,30 +191,42 @@ class _LogInState extends State<LogIn> {
                               )
                             ],
                           ),
-                        ),
-                        Container(
-                          width: size.width,
-                          padding: EdgeInsets.fromLTRB(0, 40, 0, 0),
-                          child: ElevatedButton(
-                            onPressed: () async{
-                              if (_formKey.currentState.validate()) {
-                                print("Form was submitted successfully.");
-                                try {
-                                  final user = await _auth.signInWithEmailAndPassword(email: email, password: password);
-                                  if (user != null) {
-                                    Navigator.pushNamed(context, HomePage.id);
+                        ), Container(
+                              width: size.width,
+                              padding: EdgeInsets.fromLTRB(0, 40, 0, 0),
+                              child: ElevatedButton(
+                                onPressed: () async{
+                                  if (_formKey.currentState.validate()) {
+                                    print("Form was submitted successfully.");
+                                    try {
+                                      final user = await _auth.signInWithEmailAndPassword(email: email, password: password);
+                                      if (user != null) {
+
+                                        Navigator.pushNamed(context, HomePage.id);
+                                      }
+                                    } on FirebaseAuthException  catch (e) {
+                                      final snackBar = SnackBar(
+                                        content: Text(e.message),
+                                        action: SnackBarAction(
+                                          label: 'ok',
+                                          onPressed: () {
+                                            // Some code to undo the change.
+                                          },
+                                        ),
+                                      );
+                                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+                                    }
                                   }
-                                } catch (e) {
-                                  print(e);
-                                }
-                              }
-                            },
-                            style: ElevatedButton.styleFrom(
-                                primary: Color.fromRGBO(194, 78, 84, 1),
-                                padding: EdgeInsets.fromLTRB(110, 30, 100, 20)),
-                            child: Text('LogIn'),
-                          ),
+                                },
+                                style: ElevatedButton.styleFrom(
+                                    primary: Color.fromRGBO(194, 78, 84, 1),
+                                    padding: EdgeInsets.fromLTRB(110, 30, 100, 20)),
+                                child: Text('LogIn'),
+                              ),
                         ),
+
+
                         SizedBox(
                           height: 30,
                           width: 50,
