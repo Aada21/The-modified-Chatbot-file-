@@ -71,11 +71,27 @@ class _ChatBotState extends State<ChatBot> {
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            "Doctor Bot",
+            "          Doctor Bot",
+            style: TextStyle(
+                color: Color.fromARGB(255, 79, 99, 103),
+                fontWeight: FontWeight.bold,
+                fontSize: 25),
           ),
-          backgroundColor: Colors.blue,
+          leading: IconButton(
+            //back icon
+            icon: const Icon(Icons.arrow_back_ios),
+            color: Color.fromARGB(255, 79, 99, 103),
+            iconSize: 25.0,
+
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          backgroundColor: Color.fromARGB(255, 238, 245, 219),
         ),
         body: Container(
+            decoration: BoxDecoration(
+                color: Color.fromARGB(255,122, 158, 159)),
             child:Column(children: <Widget>[
               Flexible(
                   child: ListView.builder(
@@ -86,7 +102,8 @@ class _ChatBotState extends State<ChatBot> {
                   )),
               Divider(height: 1.0),
               Container(
-                  decoration: BoxDecoration(color: Theme.of(context).cardColor),
+                  decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 238, 245, 219),),
                   child: IconTheme(
                     data: IconThemeData(color: Theme.of(context).accentColor),
                     child: Container(
@@ -97,7 +114,12 @@ class _ChatBotState extends State<ChatBot> {
                             child: TextField(
                               controller: _textController,
                               onSubmitted: handleSubmitted,
-                              decoration: InputDecoration.collapsed(hintText: "Send a message"),
+                              decoration: InputDecoration.collapsed(hintText: "Send a message",
+                                hintStyle: TextStyle(
+                                    color: Color.fromARGB(255, 79, 99, 103),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold),
+                              ),
                             ),
                           ),
                           Container(
@@ -105,6 +127,7 @@ class _ChatBotState extends State<ChatBot> {
                             child: IconButton(
                               icon: Icon(Icons.send),
                               onPressed: () => handleSubmitted(_textController.text),
+                              color: Color.fromARGB(255, 79, 99, 103),
                             ),
                           ),
                         ],
@@ -125,20 +148,33 @@ class ChatMessage extends StatelessWidget {
   final bool type;
 
   List<Widget> otherMessage(context) {
+    //
     return <Widget>[
       new Container(
         margin: const EdgeInsets.only(right: 16.0),
-        child: CircleAvatar(child: new Text('B')),
+        child: CircleAvatar(child: new Text('B'),
+          backgroundImage: AssetImage("images/bot.png"),
+          radius: 25,
+          backgroundColor: Color.fromARGB(255, 238, 245, 219),
+        ),
+
+
       ),
       new Expanded(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(this.name,
-                style: TextStyle(fontWeight: FontWeight.bold)),
+              style: TextStyle(color: Color.fromARGB(255, 79, 99, 103),
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold),
+            ),
             Container(
               margin: const EdgeInsets.only(top: 5.0),
-              child: Text(text),
+              child: Text(text,style: TextStyle(color: Color.fromARGB(
+                  255, 238, 245, 219),
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold),),
             ),
           ],
         ),
@@ -152,10 +188,15 @@ class ChatMessage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
-            Text(this.name, style: Theme.of(context).textTheme.subtitle1),
+            Text(this.name, style: TextStyle(color: Color.fromARGB(255, 79, 99, 103),
+                fontSize: 16,
+                fontWeight: FontWeight.bold),),
             Container(
               margin: const EdgeInsets.only(top: 5.0),
-              child: Text(text),
+              child: Text(text,style: TextStyle(color: Color.fromARGB(
+                  255, 238, 245, 219),
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold),),
             ),
           ],
         ),
@@ -163,8 +204,11 @@ class ChatMessage extends StatelessWidget {
       Container(
         margin: const EdgeInsets.only(left: 16.0),
         child: CircleAvatar(
-            child: Text(
-              this.name[0],
+          //pic of user
+            backgroundImage: AssetImage("images/avaus.png"),
+            radius: 25,
+            backgroundColor: Color.fromARGB(255, 238, 245, 219),
+            child: Text('',
               style: TextStyle(fontWeight: FontWeight.bold),
             )),
       ),

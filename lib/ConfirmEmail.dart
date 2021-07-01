@@ -54,31 +54,31 @@ class _ConfirmEmailState extends State<ConfirmEmail> {
               children: [
                 Center(
 
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 80.0,left: 10,right: 10),
-                      child: Text(
-                        widget.message
-                        ,
-                        style: TextStyle(color: Colors.white, fontSize: 16),
-                      ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 80.0,left: 10,right: 10),
+                    child: Text(
+                      widget.message
+                      ,
+                      style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
+                  ),
 
                 ),
                 Center(
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(primary: Colors.white70),
-                      onPressed: () {
-                        Navigator.pushNamed(context, LogIn.id);
-                      },
-                      child: Text(
-                        'LogIn',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 17,
-                          color: Colors.blueGrey,
-                        ),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(primary: Colors.white70),
+                    onPressed: () {
+                      Navigator.pushNamed(context, LogIn.id);
+                    },
+                    child: Text(
+                      'LogIn',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 17,
+                        color: Colors.blueGrey,
                       ),
                     ),
+                  ),
 
                 ),
               ],
