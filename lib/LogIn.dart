@@ -194,12 +194,18 @@ class _LogInState extends State<LogIn> {
                                     password = value;
                                   },
                                   decoration: InputDecoration(
-                                      hintText: "Password",
-                                      hintStyle: TextStyle(
-                                          color: Color.fromARGB(
-                                              255, 238, 245, 219),
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Color.fromARGB(
+                                                255, 238, 245, 219),
+                                            width: 1.0),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Color.fromARGB(
+                                                255, 238, 245, 219),
+                                            width: 1.0),
+                                      ),
                                       labelText: "Password",
                                       labelStyle: TextStyle(
                                           color: Color.fromARGB(
@@ -207,12 +213,11 @@ class _LogInState extends State<LogIn> {
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold),
                                       border: OutlineInputBorder(),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Color.fromARGB(
-                                                255, 238, 245, 219),
-                                            width: 1.0),
-                                      )),
+                                      hintStyle:
+                                      TextStyle( color: Color.fromARGB(
+                                          255, 238, 245, 219),
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold)),
                                   validator: Validators.compose([
                                     Validators.required('Password is required'),
                                     Validators.minLength(8, 'Characters are less than 8'),

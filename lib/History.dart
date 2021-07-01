@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:imagebutton/imagebutton.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'Drugs.dart';
 import 'LogIn.dart';
 import 'ProfilePage.dart';
@@ -24,6 +25,15 @@ class HistoryPage extends StatefulWidget {
 
 class _HistoryPageState extends State<HistoryPage> {
   List<dynamic> items = LogIn.list;
+  _openMap() async {
+    const url =
+        'https://www.google.com/maps/search/hospitals/@30.4646372,31.1860425,20z';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
   Animation _animation;
   final key = GlobalKey<AnimatedListState>();
@@ -432,6 +442,7 @@ class _HistoryPageState extends State<HistoryPage> {
                       title: FlatButton(
                         padding: EdgeInsets.fromLTRB(0, 0, 144, 0),
                         onPressed: () {
+                          _openMap();
                           //Navigator.pushNamed(context, HistoryPage.id);
                         },
                         child: Text(
@@ -454,6 +465,7 @@ class _HistoryPageState extends State<HistoryPage> {
                           "images/map.png",
                         ),
                         onTap: () {
+                          _openMap();
                           //  Navigator.pushNamed(context, HistoryPage.id);
                           print('666');
                         },

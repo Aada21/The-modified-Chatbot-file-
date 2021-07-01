@@ -233,6 +233,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "9.0.0"
+  gender_selection:
+    dependency: "direct main"
+    description:
+      name: gender_selection
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.8"
   get:
     dependency: "direct main"
     description:

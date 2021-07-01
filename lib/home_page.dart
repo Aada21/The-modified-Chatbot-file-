@@ -206,6 +206,7 @@ class _HomePageState extends State<HomePage> {
                       title: FlatButton(
                         padding: EdgeInsets.fromLTRB(0, 0, 144, 0),
                         onPressed: () {
+                          _openMap();
                           //Navigator.pushNamed(context, HistoryPage.id);
                         },
                         child: Text(
@@ -228,6 +229,7 @@ class _HomePageState extends State<HomePage> {
                           "images/map.png",
                         ),
                         onTap: () {
+                          _openMap();
                           //  Navigator.pushNamed(context, HistoryPage.id);
                           print('666');
                         },
@@ -302,7 +304,7 @@ class _HomePageState extends State<HomePage> {
                             "Welcome ${snapshot.data['fName']}",
                             style: TextStyle(
                               fontSize: 22.0,
-                              color: Colors.black87,
+                              color: Color.fromARGB(255, 238, 245, 219),
                             ),
                           );
                         }),

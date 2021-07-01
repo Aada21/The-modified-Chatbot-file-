@@ -20,23 +20,18 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-
-    var d;
-
+  var d;
 
   @override
-  void initState()  {
+  void initState() {
     super.initState();
-
-
   }
-
 
   @override
   Widget build(BuildContext context) {
     double screenHeight2 = MediaQuery.of(context).size.height;
     double screenWidth2 = MediaQuery.of(context).size.width;
-    var User=FirebaseAuth.instance.currentUser.displayName;
+    var User = FirebaseAuth.instance.currentUser.displayName;
     final _auth = FirebaseAuth.instance;
 
     Future<void> _signOut() async {
@@ -44,61 +39,52 @@ class _ProfilePageState extends State<ProfilePage> {
     }
 
     return Scaffold(
-      body: SafeArea(
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            color: Color.fromARGB(255, 79, 99, 103),
+            iconSize: 25.0,
+            onPressed: () {
+              _signOut();
+              Navigator.pushNamed(context, LogIn.id);
+            },
+          )
+        ],
+        leading: IconButton(
+          //back icon
+          icon: const Icon(Icons.arrow_back_ios),
+          color: Color.fromARGB(255, 79, 99, 103),
+          iconSize: 25.0,
 
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        title: Center(
+          child: Text(
+            'Profile',
+            style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(255, 79, 99, 103)),
+          ),
+        ),
+        backgroundColor: Color.fromARGB(255, 238, 245, 219),
+      ),
+      body: SafeArea(
         child: Container(
             width: screenWidth2,
             height: screenHeight2,
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.bottomLeft,
-                    end: Alignment.topRight,
-                    colors: [Colors.blueGrey.withOpacity(.3), Colors.white60])),
             child: Scaffold(
-              backgroundColor: Colors.transparent,
+              backgroundColor: Color.fromARGB(255, 122, 158, 159),
               body: SingleChildScrollView(
                 child: Column(
-                    //crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                          child: Padding(
-                              padding: EdgeInsets.only(bottom: 40.0),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  IconButton(
-                                    //back icon
-                                    icon: const Icon(Icons.arrow_back_ios),
-                                    color: Colors.black,
-                                    iconSize: 20.0,
-
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                  Text(
-                                    'Profile',
-                                    style: TextStyle(
-                                      color: Colors.black87,
-                                      fontSize: 22.0,
-                                      letterSpacing: 2.0,
-                                    ),
-                                  ),
-                                  IconButton(
-                                    //back icon
-                                    icon: const Icon(Icons.edit),
-                                    color: Colors.black,
-                                    iconSize: 20.0,
-                                    onPressed: () {},
-                                  ),
-                                ],
-                              ))),
-                      Container(
                         child: Padding(
-                          padding: EdgeInsets.only(top: 0.0),
+                          padding: EdgeInsets.fromLTRB(35, 25, 0, 0),
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -111,176 +97,145 @@ class _ProfilePageState extends State<ProfilePage> {
                                 SizedBox(
                                   height: 10.0,
                                 ),
-
                                 StreamBuilder(
-                                  stream: FirebaseFirestore.instance.collection('Profile').doc(_auth.currentUser.uid).snapshots(),
-                                  builder: (context, snapshot) {
-                                    if(!snapshot.hasData)
-                                      {
-                                        return Center(
-                                            child:Loading());
+                                    stream: FirebaseFirestore.instance
+                                        .collection('Profile')
+                                        .doc(_auth.currentUser.uid)
+                                        .snapshots(),
+                                    builder: (context, snapshot) {
+                                      if (!snapshot.hasData) {
+                                        return Center(child: Loading());
                                       }
-                                    return Text(
-                                      "Welcome ${snapshot.data['fName']}",
-                                      style: TextStyle(
-                                        fontSize: 22.0,
-                                        color: Colors.black87,
-                                      ),
-                                    );
-                                  }
-                                ),
+                                      return Text(
+                                        "Welcome ${snapshot.data['fName']}",
+                                        style: TextStyle(
+                                          fontSize: 22.0,
+                                          color: Color.fromARGB(
+                                              255, 238, 245, 219),
+                                        ),
+                                      );
+                                    }),
                                 SizedBox(
                                   height: 40.0,
                                 )
                               ]),
                         ),
                       ),
-                      Stack(
-                        children: [
+                      Stack(children: [
                         StreamBuilder(
+                            stream: FirebaseFirestore.instance
+                                .collection('Profile')
+                                .doc(_auth.currentUser.uid)
+                                .snapshots(),
+                            builder: (context, snapshot) {
+                              if (!snapshot.hasData) {
+                                return Center(child: Loading());
+                              }
+                              return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Padding(
+                                        //Name
 
-                          stream: FirebaseFirestore.instance.collection('Profile').doc(_auth.currentUser.uid).snapshots(),
-                          builder: (context, snapshot) {
-                            if (!snapshot.hasData) {
-                              return Center(
-                                  child: Loading());
-                            }
-                            return Column(
-                                // mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-
-                                     Padding(
-                                       //Name
-
-                                       padding: const EdgeInsets.fromLTRB(110, 0, 10, 0),
-                                       child:  Text('${snapshot.data['fName']}'
-                                            // decoration: InputDecoration(
-                                            //     border: InputBorder.none,
-                                            //     focusedBorder: OutlineInputBorder(
-                                            //         borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                                            //         borderSide: BorderSide(color: Colors.grey)),
-                                            //         hintText: ('Your Name '),
-                                            //     labelStyle: TextStyle(
-                                            //       color: Colors.black,
-                                            //       fontSize: 20,
-                                            //     ),
-                                            //     hintStyle:
-                                            //         TextStyle(color: Colors.black)),
-                                      )
-
+                                        padding: const EdgeInsets.fromLTRB(
+                                            110, 14, 0, 0),
+                                        child: Text(
+                                          '${snapshot.data['fName']}',
+                                          style: TextStyle(
+                                            fontSize: 20.0,
+                                            color: Color.fromARGB(
+                                                255, 238, 245, 219),
+                                          ),
+                                        )),
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          110, 40, 10, 0),
+                                      child: Text(
+                                        'phone',
+                                        style: TextStyle(
+                                          fontSize: 20.0,
+                                          color: Color.fromARGB(
+                                              255, 238, 245, 219),
+                                        ),
+                                      ),
                                     ),
-
-                                  Padding(
-                                    padding: const EdgeInsets.fromLTRB(110, 12, 10, 0),
-
-                                    child: Text(
-                                      "${snapshot.data['gender']}"
-                                      // keyboardType: TextInputType.number,
-                                      // decoration: InputDecoration(
-                                      //     border: InputBorder.none,
-                                      //     focusedBorder: OutlineInputBorder(
-                                      //         borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                                      //         borderSide: BorderSide(color: Colors.grey)),
-                                      //     hintText: ('Your Phone '),
-                                      //     labelStyle: TextStyle(
-                                      //         color: Colors.black, fontSize: 20),
-                                      //     hintStyle: TextStyle(color: Colors.black)),
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          110, 45, 10, 0),
+                                      child: Text(
+                                        "${snapshot.data['gender']}",
+                                        style: TextStyle(
+                                          fontSize: 20.0,
+                                          color: Color.fromARGB(
+                                              255, 238, 245, 219),
+                                        ),
+                                      ),
                                     ),
-                                  ),
-
-                                  Padding(
-                                      padding: EdgeInsets.fromLTRB(110, 18, 10, 0),
-                                      child: GenderField(['Male','Female'])
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.fromLTRB(110, 15, 10, 0),
-                                    child: TextField(
-                                      keyboardType: TextInputType.number,
-                                      inputFormatters: [DateInputFormatter()],
-                                      decoration: InputDecoration(
-                                          border: InputBorder.none,
-                                          focusedBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                                              borderSide: BorderSide(color: Colors.grey)),
-                                          hintText: ('--/--/----'),
-                                          labelStyle: TextStyle(
-                                              color: Colors.black, fontSize: 20),
-                                          hintStyle: TextStyle(color: Colors.black)),
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          110, 50, 10, 0),
+                                      child: Text(
+                                        'birth',
+                                        style: TextStyle(
+                                          fontSize: 20.0,
+                                          color: Color.fromARGB(
+                                              255, 238, 245, 219),
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ]);
-                          }
-                        ),
-                          Column(
+                                  ]);
+                            }),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(0, 0, 200, 0),
+                          child: Column(
                             children: [
                               Padding(
-                                padding: const EdgeInsets.fromLTRB(10, 15, 10, 0),
+                                padding: EdgeInsets.fromLTRB(10, 15, 10, 0),
                                 child: Text(
                                   'Name :',
                                   style: TextStyle(
-                                    color: Colors.black87,
-                                    fontSize: 16.0,
-                                    letterSpacing: 2.0,
+                                    fontSize: 20.0,
+                                    color: Color.fromARGB(255, 238, 245, 219),
                                   ),
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.fromLTRB(20, 40, 10, 0),
+                                padding:
+                                    const EdgeInsets.fromLTRB(20, 40, 10, 0),
                                 child: Text(
                                   'Phone :',
                                   style: TextStyle(
-                                    color: Colors.black87,
-                                    fontSize: 16.0,
-                                    letterSpacing: 2.0,
+                                    fontSize: 20.0,
+                                    color: Color.fromARGB(255, 238, 245, 219),
                                   ),
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.fromLTRB(10, 45, 10, 0),
+                                padding:
+                                    const EdgeInsets.fromLTRB(10, 45, 10, 0),
                                 child: Text(
                                   'Gender :',
                                   style: TextStyle(
-                                    color: Colors.black87,
-                                    fontSize: 16.0,
-                                    letterSpacing: 2.0,
+                                    fontSize: 20.0,
+                                    color: Color.fromARGB(255, 238, 245, 219),
                                   ),
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.fromLTRB(10, 50, 10, 0),
+                                padding:
+                                    const EdgeInsets.fromLTRB(10, 50, 10, 0),
                                 child: Text(
                                   'BirthDate :',
                                   style: TextStyle(
-                                    color: Colors.black87,
-                                    fontSize: 16.0,
-                                    letterSpacing: 2.0,
+                                    fontSize: 20.0,
+                                    color: Color.fromARGB(255, 238, 245, 219),
                                   ),
                                 ),
                               ),
                             ],
-                          )
-
-
-                     ] ),
-                      Row(
-
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-
-                            IconButton(
-                              padding: EdgeInsets.all(30),
-                              //back icon
-                              icon: const Icon(Icons.logout),
-                              color: Colors.black,
-                              iconSize: 30.0,
-                              onPressed: () {
-                                  _signOut();
-                                 Navigator.pushNamed(context, LogIn.id);
-                        },
-                            ),
-                          ]),
+                          ),
+                        )
+                      ]),
                     ]),
               ),
             )),
@@ -290,7 +245,6 @@ class _ProfilePageState extends State<ProfilePage> {
 }
 
 class GenderField extends StatelessWidget {
-
   final List<String> genderList;
 
   GenderField(this.genderList);
@@ -306,7 +260,7 @@ class GenderField extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           ...mappedGender.entries.map(
-                (MapEntry<int, String> mapEntry) => Row(
+            (MapEntry<int, String> mapEntry) => Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -316,19 +270,20 @@ class GenderField extends StatelessWidget {
                     value: genderList[mapEntry.key],
                     onChanged: (value) => setState(() => select = value),
                   ),
-                  Text(mapEntry.value,)
-
+                  Text(
+                    mapEntry.value,
+                  )
                 ]),
           ),
         ],
       ),
     );
   }
-
 }
- getData(var id) async {
-  final data = await FirebaseFirestore.instance.collection('Profile').doc(id).get();
 
+getData(var id) async {
+  final data =
+      await FirebaseFirestore.instance.collection('Profile').doc(id).get();
 
-return await data.data()['fName'];
+  return await data.data()['fName'];
 }

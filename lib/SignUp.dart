@@ -4,6 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gender_selection/gender_selection.dart';
+import 'package:pattern_formatter/date_formatter.dart';
 import 'package:profile_page/History.dart';
 import 'package:profile_page/db.dart';
 import 'package:wc_form_validators/wc_form_validators.dart';
@@ -26,7 +28,7 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
   final _auth = FirebaseAuth.instance;
-  String email, password, fName, lName;
+  String email, password, fName, lName,phone;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -287,12 +289,126 @@ class _SignUpState extends State<SignUp> {
                                 ]),
                               ),
                             ),
+
+
+
+                            Container(
+                              padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+                              child: TextFormField(
+                                textAlign: TextAlign.center,
+                                keyboardType: TextInputType.number,
+                                onChanged: (value) {
+                                  phone = value;
+                                },
+                                decoration: InputDecoration(
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Color.fromARGB(
+                                              255, 238, 245, 219),
+                                          width: 1.0),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Color.fromARGB(
+                                              255, 238, 245, 219),
+                                          width: 1.0),
+                                    ),
+                                    labelText: "Phone",
+                                    labelStyle: TextStyle(
+                                        color: Color.fromARGB(
+                                            255, 238, 245, 219),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
+                                    border: OutlineInputBorder(),
+                                    hintStyle:
+                                    TextStyle( color: Color.fromARGB(
+                                        255, 238, 245, 219),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold)),
+                                validator: Validators.compose([
+                                  Validators.required('Phone is required'),
+                                  Validators.minLength(
+                                      11, 'Characters are less than 11'),
+                                  Validators.patternRegExp(
+                                      RegExp(r'^(?:[+0][1-9])?[0-9]{10,12}$'),
+                                      'Enter Number Again'),
+                                ]),
+                              ),
+                            ),
+
+                            Container(
+                              padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                              child: TextFormField(
+                                keyboardType: TextInputType.number,
+                                inputFormatters: [DateInputFormatter()],
+                                decoration: InputDecoration(
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Color.fromARGB(
+                                              255, 238, 245, 219),
+                                          width: 1.0),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Color.fromARGB(
+                                              255, 238, 245, 219),
+                                          width: 1.0),
+                                    ),
+                                    hintText: ('--/--/----'),
+                                    labelText: "Birthday",
+                                    labelStyle: TextStyle(
+                                        color: Color.fromARGB(
+                                            255, 238, 245, 219),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
+                                    border: OutlineInputBorder(),
+                                    hintStyle:
+                                    TextStyle( color: Color.fromARGB(
+                                        255, 238, 245, 219),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold)),
+                                validator: Validators.compose([
+                                  Validators.required('Birthday is required'),
+                                  Validators.minLength(
+                                      8, 'Characters are less than 11'),
+                                  Validators.patternRegExp(
+                                      RegExp(r'^([0]?[1-9]|[1|2][0-9]|[3][0|1])[./-]([0]?[1-9]|[1][0-2])[./-]([0-9]{4}|[0-9]{2})$'),
+                                      'Enter Your Birthday '),
+                                ]),
+                              ),
+                            ),
+
+                            GenderSelection(
+                              // maleText: "", //default Male
+                              // femaleText: "", //default Female
+                              selectedGenderIconBackgroundColor: Color.fromARGB(255, 238, 245, 219),  // default red
+                              checkIconAlignment: Alignment.centerRight,   // default bottomRight
+                              selectedGenderCheckIcon: null, // default Icons.check
+                              onChanged: (Gender gender){
+
+                                print(gender);
+
+                              },
+                              equallyAligned: true,
+                              animationDuration: Duration(milliseconds: 400),
+                              isCircular: true, // default : true,
+                              isSelectedGenderIconCircular: true,
+                              opacityOfGradient: 0.6,
+                              padding: const EdgeInsets.all(3),
+                              size: 100, //default : 120
+
+                            ),
+
+
+
+
+
                           ],
                         ),
                       ),
                       Container(
                         width: screenWidth,
-                        padding: EdgeInsets.fromLTRB(0, 280, 0, 0),
+                        padding: EdgeInsets.fromLTRB(0, 600, 0, 0),
                         child: ElevatedButton(
                           onPressed: () async {
                             if (_formKey.currentState.validate()) {
