@@ -533,7 +533,7 @@ class _DrugsState extends State<Drugs> {
             onPressed: () async {
               removeItem(index);
 
-     await FirebaseFirestore.instance.collection('Drugs').doc(FirebaseAuth.instance.currentUser.uid).set({'D':items});
+              await FirebaseFirestore.instance.collection('Drugs').doc(FirebaseAuth.instance.currentUser.uid).set({'D':items});
             },
             icon: Icon(
               Icons.close,

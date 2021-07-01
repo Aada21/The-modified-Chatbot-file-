@@ -11,9 +11,9 @@ import 'LogIn.dart';
 import 'home_page.dart';
 
 void main() => runApp(MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: SignUp(),
-    ));
+  debugShowCheckedModeBanner: false,
+  home: SignUp(),
+));
 
 class SignUp extends StatefulWidget {
   SignUp({Key key}) : super(key: key);
@@ -39,10 +39,8 @@ class _SignUpState extends State<SignUp> {
             height: screenHeight,
             width: screenWidth,
             decoration: BoxDecoration(
-                image: DecorationImage(
-              image: AssetImage('images/Background.png'),
-              fit: BoxFit.fill,
-            )),
+                color: Color.fromARGB(255,122, 158, 159)
+              ),
             child: SingleChildScrollView(
               child: Stack(children: <Widget>[
                 Positioned(
@@ -54,7 +52,7 @@ class _SignUpState extends State<SignUp> {
                     child: Text(
                       'Tameny Ya Doctor!',
                       style: TextStyle(
-                          color: Colors.black87,
+                          color: Color.fromARGB(255, 238, 245, 219),
                           fontWeight: FontWeight.bold,
                           fontSize: 25),
                     ),
@@ -79,9 +77,9 @@ class _SignUpState extends State<SignUp> {
                           child: Text(
                             'LogIn',
                             style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 17,
-                              color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 17,
+                                color: Color.fromARGB(255, 238, 245, 219)
                             ),
                           ),
                         ),
@@ -94,7 +92,7 @@ class _SignUpState extends State<SignUp> {
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 17,
-                              color: Colors.white,
+                              color: Color.fromARGB(255, 238, 245, 219),
                             ),
                           ),
                         )
@@ -123,10 +121,30 @@ class _SignUpState extends State<SignUp> {
                                         fName = value;
                                       },
                                       decoration: InputDecoration(
-                                          labelText: "First Name ",
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Color.fromARGB(
+                                                    255, 238, 245, 219),
+                                                width: 1.0),
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Color.fromARGB(
+                                                    255, 238, 245, 219),
+                                                width: 1.0),
+                                          ),
+                                          labelText: "First Name",
+                                          labelStyle: TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 238, 245, 219),
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold),
                                           border: OutlineInputBorder(),
                                           hintStyle:
-                                              TextStyle(color: Colors.white)),
+                                          TextStyle( color: Color.fromARGB(
+                                              255, 238, 245, 219),
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold)),
                                       // validator: validateText,
                                       validator: Validators.compose([
                                         Validators.required(
@@ -149,10 +167,30 @@ class _SignUpState extends State<SignUp> {
                                         lName = value;
                                       },
                                       decoration: InputDecoration(
-                                          labelText: "Last Name ",
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Color.fromARGB(
+                                                    255, 238, 245, 219),
+                                                width: 1.0),
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Color.fromARGB(
+                                                    255, 238, 245, 219),
+                                                width: 1.0),
+                                          ),
+                                          labelText: "Last Name",
+                                          labelStyle: TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 238, 245, 219),
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold),
                                           border: OutlineInputBorder(),
                                           hintStyle:
-                                              TextStyle(color: Colors.white)),
+                                          TextStyle( color: Color.fromARGB(
+                                              255, 238, 245, 219),
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold)),
                                       // validator: validateText,
                                       validator: Validators.compose([
                                         Validators.required('Enter Last Name '),
@@ -176,9 +214,30 @@ class _SignUpState extends State<SignUp> {
                                   email = value;
                                 },
                                 decoration: InputDecoration(
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Color.fromARGB(
+                                              255, 238, 245, 219),
+                                          width: 1.0),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Color.fromARGB(
+                                              255, 238, 245, 219),
+                                          width: 1.0),
+                                    ),
                                     labelText: "Email Address",
+                                    labelStyle: TextStyle(
+                                        color: Color.fromARGB(
+                                            255, 238, 245, 219),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
                                     border: OutlineInputBorder(),
-                                    hintStyle: TextStyle(color: Colors.white)),
+                                    hintStyle:
+                                    TextStyle( color: Color.fromARGB(
+                                        255, 238, 245, 219),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold)),
                                 // validator: validateText,
                                 validator: Validators.compose([
                                   Validators.required('Email is required'),
@@ -195,9 +254,30 @@ class _SignUpState extends State<SignUp> {
                                   password = value;
                                 },
                                 decoration: InputDecoration(
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Color.fromARGB(
+                                              255, 238, 245, 219),
+                                          width: 1.0),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Color.fromARGB(
+                                              255, 238, 245, 219),
+                                          width: 1.0),
+                                    ),
                                     labelText: "Password",
+                                    labelStyle: TextStyle(
+                                        color: Color.fromARGB(
+                                            255, 238, 245, 219),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
                                     border: OutlineInputBorder(),
-                                    hintStyle: TextStyle(color: Colors.white)),
+                                    hintStyle:
+                                    TextStyle( color: Color.fromARGB(
+                                        255, 238, 245, 219),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold)),
                                 validator: Validators.compose([
                                   Validators.required('Password is required'),
                                   Validators.minLength(
@@ -219,8 +299,8 @@ class _SignUpState extends State<SignUp> {
                               print("Form was submitted successfully yalla.");
                               try {
                                 final newUser =
-                                    await _auth.createUserWithEmailAndPassword(
-                                        email: email, password: password);
+                                await _auth.createUserWithEmailAndPassword(
+                                    email: email, password: password);
                                 var user = newUser.user;
                                 var map = {
                                   'fName': fName,
@@ -235,7 +315,7 @@ class _SignUpState extends State<SignUp> {
                                 var mapDrugs = {
                                   'D':[]
                                 };
-                                 await DatabaseService(uid: user.uid, info: map,history:mapHistory,drugs: mapDrugs).init();
+                                await DatabaseService(uid: user.uid, info: map,history:mapHistory,drugs: mapDrugs).init();
                                 if (newUser != null) {
 
                                   Navigator.pushNamed(context, HomePage.id);
@@ -256,12 +336,17 @@ class _SignUpState extends State<SignUp> {
                             }
                           },
                           style: ElevatedButton.styleFrom(
-                              primary: Color.fromRGBO(194, 78, 84, 1),
+                              side: BorderSide(
+                                  width: 1,
+                                  color: Color.fromARGB(255, 238, 245, 219)),
+                              primary: Color.fromARGB(255, 79, 99, 103),
                               padding: EdgeInsets.fromLTRB(110, 30, 100, 20)),
-                          child: Text('Sign Up'),
+                          child: Text('Sign Up',style: TextStyle(
+                            fontSize: 18,
+                          ),
                         ),
                       ),
-                    ],
+                      )],
                   ),
                 )
               ]),

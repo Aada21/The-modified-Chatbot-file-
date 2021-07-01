@@ -12,11 +12,11 @@ class DatabaseService {
   DatabaseService({this.uid, this.info,this.history,this.drugs});
 
   final CollectionReference historyCollection =
-      FirebaseFirestore.instance.collection('History');
+  FirebaseFirestore.instance.collection('History');
   final CollectionReference profileCollection =
-      FirebaseFirestore.instance.collection('Profile');
+  FirebaseFirestore.instance.collection('Profile');
   final CollectionReference drugsCollection =
-      FirebaseFirestore.instance.collection('Drugs');
+  FirebaseFirestore.instance.collection('Drugs');
 
   Future updateUserData() async {
     return await historyCollection.doc(uid).set(history);

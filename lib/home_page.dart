@@ -19,13 +19,15 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   _openMap() async {
-    const url = 'https://www.google.com/maps/search/hospitals/@30.4646372,31.1860425,20z';
+    const url =
+        'https://www.google.com/maps/search/hospitals/@30.4646372,31.1860425,20z';
     if (await canLaunch(url)) {
       await launch(url);
     } else {
       throw 'Could not launch $url';
     }
   }
+
   final _auth = FirebaseAuth.instance;
   User loggedInUser;
   @override
@@ -57,30 +59,223 @@ class _HomePageState extends State<HomePage> {
     double Screenw = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      appBar: AppBar(
+        iconTheme: IconThemeData(color: Color.fromARGB(255, 79, 99, 103)),
+        title: const Text(
+          '                  Home',
+          style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Color.fromARGB(255, 79, 99, 103)),
+        ),
+        backgroundColor: Color.fromARGB(255, 238, 245, 219),
+      ),
+      drawer: Theme(
+        data: Theme.of(context)
+            .copyWith(canvasColor: Color.fromARGB(255, 122, 158, 159)),
+        child: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 238, 245, 219), //header
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ImageButton(
+                    label: Text(
+                      'Profile',
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 79, 99, 103),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18),
+                    ),
+                    children: <Widget>[],
+                    width: 100,
+                    height: 100,
+                    pressedImage: Image.asset(
+                      "images/avatar.png",
+                    ),
+                    unpressedImage: Image.asset("images/avatar.png"),
+                    onTap: () {
+                      Navigator.pushNamed(context, ProfilePage.id);
+                      print('test');
+                    },
+                  ),
+                ),
+              ),
+              Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ListTile(
+                      title: FlatButton(
+                        padding: EdgeInsets.fromLTRB(0, 0, 130, 0),
+                        onPressed: () {
+                          Navigator.pushNamed(context, ChatBot.id);
+                        },
+                        child: Text(
+                          'Doc Bot',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 17,
+                            color: Color.fromARGB(255, 238, 245, 219),
+                          ),
+                        ),
+                      ),
+                      leading: ImageButton(
+                        children: <Widget>[],
+                        width: Screenw / 7,
+                        height: Screenh / 15,
+                        pressedImage: Image.asset(
+                          "images/bot.png",
+                        ),
+                        unpressedImage: Image.asset(
+                          "images/bot.png",
+                        ),
+                        onTap: () {
+                          Navigator.pushNamed(context, ChatBot.id);
+                          print('666');
+                        },
+                      ),
+                    ),
+                    ListTile(
+                      title: FlatButton(
+                        padding: EdgeInsets.fromLTRB(0, 0, 140, 0),
+                        onPressed: () {
+                          Navigator.pushNamed(context, Drugs.id);
+                        },
+                        child: Text(
+                          'Drugs',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 17,
+                            color: Color.fromARGB(255, 238, 245, 219),
+                          ),
+                        ),
+                      ),
+                      leading: ImageButton(
+                        children: <Widget>[],
+                        width: Screenw / 7,
+                        height: Screenh / 15,
+                        pressedImage: Image.asset(
+                          "images/drugs.png",
+                        ),
+                        unpressedImage: Image.asset(
+                          "images/drugs.png",
+                        ),
+                        onTap: () {
+                          Navigator.pushNamed(context, Drugs.id);
+                          print('666');
+                        },
+                      ),
+                    ),
+                    ListTile(
+                      title: FlatButton(
+                        padding: EdgeInsets.fromLTRB(0, 0, 125, 0),
+                        onPressed: () {
+                          Navigator.pushNamed(context, HistoryPage.id);
+                        },
+                        child: Text(
+                          'History',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 17,
+                            color: Color.fromARGB(255, 238, 245, 219),
+                          ),
+                        ),
+                      ),
+                      leading: ImageButton(
+                        children: <Widget>[],
+                        width: Screenw / 7,
+                        height: Screenh / 15,
+                        pressedImage: Image.asset(
+                          "images/history.png",
+                        ),
+                        unpressedImage: Image.asset(
+                          "images/history.png",
+                        ),
+                        onTap: () {
+                          Navigator.pushNamed(context, HistoryPage.id);
+                          print('666');
+                        },
+                      ),
+                    ),
+                    ListTile(
+                      title: FlatButton(
+                        padding: EdgeInsets.fromLTRB(0, 0, 144, 0),
+                        onPressed: () {
+                          //Navigator.pushNamed(context, HistoryPage.id);
+                        },
+                        child: Text(
+                          'Map',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 17,
+                            color: Color.fromARGB(255, 238, 245, 219),
+                          ),
+                        ),
+                      ),
+                      leading: ImageButton(
+                        children: <Widget>[],
+                        width: Screenw / 7,
+                        height: Screenh / 15,
+                        pressedImage: Image.asset(
+                          "images/map.png",
+                        ),
+                        unpressedImage: Image.asset(
+                          "images/map.png",
+                        ),
+                        onTap: () {
+                          //  Navigator.pushNamed(context, HistoryPage.id);
+                          print('666');
+                        },
+                      ),
+                    ),
+                    ListTile(
+                      title: Text(
+                        'Pdf',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromARGB(255, 238, 245, 219),
+                          fontSize: 18,
+                        ),
+                      ),
+                      leading: ImageButton(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[],
+                        width: Screenw / 9,
+                        height: Screenh / 17,
+                        pressedImage: Image.asset(
+                          "images/pdf1.png",
+                        ),
+                        unpressedImage: Image.asset(
+                          "images/pdf1.png",
+                        ),
+                        onTap: () {
+                          print('02000');
+                        },
+                      ),
+                    ),
+                  ]),
+            ],
+          ),
+        ),
+      ),
       body: Stack(
         children: [
           Container(
             width: Screenw,
             height: Screenh,
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.bottomLeft,
-                  end: Alignment.topRight,
-                  colors: [Colors.blueGrey.withOpacity(.3), Colors.white60]),
+                color: Color.fromARGB(255,122, 158, 159)
             ),
             child: Center(
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    Text(
-                      'Home',
-                      style: TextStyle(
-                        fontSize: 40.0,
-                        color: Colors.black,
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
                     ImageButton(
                       children: <Widget>[],
                       width: 100,
@@ -95,12 +290,13 @@ class _HomePageState extends State<HomePage> {
                       },
                     ),
                     StreamBuilder(
-                        stream: FirebaseFirestore.instance.collection('Profile').doc(_auth.currentUser.uid).snapshots(),
+                        stream: FirebaseFirestore.instance
+                            .collection('Profile')
+                            .doc(_auth.currentUser.uid)
+                            .snapshots(),
                         builder: (context, snapshot) {
-                          if(!snapshot.hasData)
-                          {
-                            return Center(
-                                child:Loading());
+                          if (!snapshot.hasData) {
+                            return Center(child: Loading());
                           }
                           return Text(
                             "Welcome ${snapshot.data['fName']}",
@@ -109,8 +305,7 @@ class _HomePageState extends State<HomePage> {
                               color: Colors.black87,
                             ),
                           );
-                        }
-                    ),
+                        }),
                     GridView.count(
                         primary: false,
                         shrinkWrap: true,

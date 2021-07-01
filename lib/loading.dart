@@ -7,7 +7,7 @@ class Loading extends StatelessWidget {
     return Container(
       child: Center(
         child: SpinKitWave(
-          color: Colors.teal,
+          color: Color.fromARGB(255, 238, 245, 219),
           size: 20,
         ),
       ),

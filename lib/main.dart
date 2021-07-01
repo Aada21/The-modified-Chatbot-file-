@@ -26,7 +26,7 @@ class DogBot extends StatelessWidget {
       title: 'Home',
 
       debugShowCheckedModeBanner: false,
-      initialRoute: SplashScreen.id,
+      initialRoute: LogIn.id,
       routes: {
         SplashScreen.id: (context) => SplashScreen(),
         LogIn.id: (context) => LogIn(),

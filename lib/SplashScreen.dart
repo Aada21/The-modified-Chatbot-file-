@@ -39,10 +39,9 @@ class _SplashScreenState extends State<SplashScreen> {
 
       body: Container(
         decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('images/Background.png'),
-              fit: BoxFit.fill,
-            )),
+
+            color: Color.fromARGB(255,122, 158, 159),
+        ),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
