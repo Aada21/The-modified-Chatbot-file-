@@ -120,7 +120,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                   padding:
                                   const EdgeInsets.fromLTRB(60, 15, 10, 0),
                                   child: Text(
-                                    'Enter A Diseases ',
+                                    'Add A Diseases ',
                                     style: TextStyle(
                                       color: Color.fromARGB(255,238, 245, 219),
                                       fontSize: 18,
@@ -129,19 +129,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                     ),
                                   ),
                                 ),
-                                Padding(
-                                  padding:
-                                  const EdgeInsets.fromLTRB(10, 30, 10, 0),
-                                  child: Text(
-                                    'Disease Name :',
-                                    style: TextStyle(
-                                      color: Color.fromARGB(255,238, 245, 219),
-                                      fontSize: 18,
-                                      letterSpacing: 2.0,
-                                      decoration: TextDecoration.none,
-                                    ),
-                                  ),
-                                ),
+
                                 Padding(
                                   padding:
                                   const EdgeInsets.fromLTRB(0, 20, 0, 0),
@@ -150,7 +138,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                       _dis = value.trim();
                                     },
                                     decoration: InputDecoration(
-                                        hintText: "Diabetes",
+                                        hintText: "Disease",
                                         hintStyle:TextStyle(color: Color.fromARGB(255,238, 245, 219),fontSize: 16,fontWeight:FontWeight.bold),
                                         labelText: "Diabetes",
                                         labelStyle: TextStyle(color:Color.fromARGB(255,238, 245, 219),fontSize: 16,fontWeight:FontWeight.bold),
@@ -178,14 +166,6 @@ class _HistoryPageState extends State<HistoryPage> {
                                 ),
                                 Column(
                                   children: <Widget>[
-                                    // Text(
-                                    //   'Choose your Date',
-                                    //   style: TextStyle(
-                                    //       fontStyle: FontStyle.italic,
-                                    //       fontWeight: FontWeight.w600,
-                                    //       letterSpacing: 0.5,
-                                    //       color: Colors.white),
-                                    // ),
                                     InkWell(
                                       onTap: () {
                                         _selectDate(context);
