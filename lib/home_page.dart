@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:imagebutton/imagebutton.dart';
 import 'package:profile_page/Drugs.dart';
 import 'package:profile_page/History.dart';
@@ -51,7 +54,30 @@ class _HomePageState extends State<HomePage> {
   Future navigateToChatBot(context) async {
     Navigator.push(context, MaterialPageRoute(builder: (context) => ChatBot()));
   }
-
+  Future<bool> _onBackPressed() {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Are you sure?'),
+            content: Text('You are going to exit the application!!'),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('NO'),
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                },
+              ),
+              FlatButton(
+                child: Text('YES'),
+                onPressed: () {
+                  SystemNavigator.pop();
+                },
+              ),
+            ],
+          );
+        });
+  }
   @override
   Widget build(BuildContext context) {
     var mediaQueryData = MediaQuery.of(context);
@@ -59,6 +85,7 @@ class _HomePageState extends State<HomePage> {
     double Screenw = MediaQuery.of(context).size.width;
 
     return Scaffold(
+
       appBar: AppBar(
         iconTheme: IconThemeData(color: Color.fromARGB(255, 79, 99, 103)),
         title: const Text(
@@ -116,7 +143,7 @@ class _HomePageState extends State<HomePage> {
                           Navigator.pushNamed(context, ChatBot.id);
                         },
                         child: Text(
-                          'Doc Bot',
+                          'Doctor Bot',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 17,
@@ -265,115 +292,120 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      body: Stack(
-        children: [
-          Container(
-            width: Screenw,
-            height: Screenh,
-            decoration: BoxDecoration(
-                color: Color.fromARGB(255,122, 158, 159)
-            ),
-            child: Center(
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    ImageButton(
-                      children: <Widget>[],
-                      width: 100,
-                      height: 100,
-                      pressedImage: Image.asset(
-                        "images/avatar.png",
+      body: WillPopScope(
+        onWillPop: _onBackPressed,
+
+        child: Stack(
+          children: [
+            Container(
+              width: Screenw,
+              height: Screenh,
+              decoration: BoxDecoration(
+                  color: Color.fromARGB(255,122, 158, 159)
+              ),
+              child: Center(
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      ImageButton(
+                        children: <Widget>[],
+                        width: 100,
+                        height: 100,
+                        pressedImage: Image.asset(
+                          "images/avatar.png",
+                        ),
+                        unpressedImage: Image.asset("images/avatar.png"),
+                        onTap: () {
+                          Navigator.pushNamed(context, ProfilePage.id);
+                          print('test');
+                        },
                       ),
-                      unpressedImage: Image.asset("images/avatar.png"),
-                      onTap: () {
-                        Navigator.pushNamed(context, ProfilePage.id);
-                        print('test');
-                      },
-                    ),
-                    StreamBuilder(
-                        stream: FirebaseFirestore.instance
-                            .collection('Profile')
-                            .doc(_auth.currentUser.uid)
-                            .snapshots(),
-                        builder: (context, snapshot) {
-                          if (!snapshot.hasData) {
-                            return Center(child: Loading());
-                          }
-                          return Text(
-                            "Welcome ${snapshot.data['fName']}",
-                            style: TextStyle(
-                              fontSize: 22.0,
-                              color: Color.fromARGB(255, 238, 245, 219),
+                      SizedBox(height: 10),
+                      StreamBuilder(
+                          stream: FirebaseFirestore.instance
+                              .collection('Profile')
+                              .doc(_auth.currentUser.uid)
+                              .snapshots(),
+                          builder: (context, snapshot) {
+                            if (!snapshot.hasData) {
+                              return Center(child: Loading());
+                            }
+                            return Text(
+                              "Welcome ${snapshot.data['fName']}",
+                              style: TextStyle(
+                                fontSize: 22.0,
+                                color: Color.fromARGB(255, 238, 245, 219),
+                              ),
+                            );
+                          }),
+                      GridView.count(
+                          primary: false,
+                          shrinkWrap: true,
+                          padding: const EdgeInsets.all(20),
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10,
+                          crossAxisCount: 2,
+                          children: <Widget>[
+                            ImageButton(
+                              children: <Widget>[],
+                              width: 100,
+                              height: 110,
+                              pressedImage: Image.asset(
+                                "images/bot.png",
+                              ),
+                              unpressedImage: Image.asset("images/bot.png"),
+                              onTap: () {
+                                Navigator.pushNamed(context, ChatBot.id);
+                                print('test');
+                              },
                             ),
-                          );
-                        }),
-                    GridView.count(
-                        primary: false,
-                        shrinkWrap: true,
-                        padding: const EdgeInsets.all(20),
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 10,
-                        crossAxisCount: 2,
-                        children: <Widget>[
-                          ImageButton(
-                            children: <Widget>[],
-                            width: 100,
-                            height: 110,
-                            pressedImage: Image.asset(
-                              "images/bot.png",
+                            ImageButton(
+                              children: <Widget>[],
+                              width: 100,
+                              height: 100,
+                              pressedImage: Image.asset(
+                                "images/map.png",
+                              ),
+                              unpressedImage: Image.asset("images/map.png"),
+                              onTap: () {
+                                _openMap();
+                              },
                             ),
-                            unpressedImage: Image.asset("images/bot.png"),
-                            onTap: () {
-                              Navigator.pushNamed(context, ChatBot.id);
-                              print('test');
-                            },
-                          ),
-                          ImageButton(
-                            children: <Widget>[],
-                            width: 100,
-                            height: 100,
-                            pressedImage: Image.asset(
-                              "images/map.png",
+                            ImageButton(
+                              children: <Widget>[],
+                              width: 100,
+                              height: 110,
+                              pressedImage: Image.asset(
+                                "images/drugs.png",
+                              ),
+                              unpressedImage: Image.asset("images/drugs.png"),
+                              onTap: () {
+                                print('test');
+                                Navigator.pushNamed(context, Drugs.id);
+                              },
                             ),
-                            unpressedImage: Image.asset("images/map.png"),
-                            onTap: () {
-                              _openMap();
-                            },
-                          ),
-                          ImageButton(
-                            children: <Widget>[],
-                            width: 100,
-                            height: 110,
-                            pressedImage: Image.asset(
-                              "images/drugs.png",
+                            ImageButton(
+                              children: <Widget>[],
+                              width: 100,
+                              height: 100,
+                              pressedImage: Image.asset(
+                                "images/history.png",
+                              ),
+                              unpressedImage: Image.asset("images/history.png"),
+                              onTap: () {
+                                print('test');
+                                Navigator.pushNamed(context, HistoryPage.id);
+                              },
                             ),
-                            unpressedImage: Image.asset("images/drugs.png"),
-                            onTap: () {
-                              print('test');
-                              Navigator.pushNamed(context, Drugs.id);
-                            },
-                          ),
-                          ImageButton(
-                            children: <Widget>[],
-                            width: 100,
-                            height: 100,
-                            pressedImage: Image.asset(
-                              "images/history.png",
-                            ),
-                            unpressedImage: Image.asset("images/history.png"),
-                            onTap: () {
-                              print('test');
-                              Navigator.pushNamed(context, HistoryPage.id);
-                            },
-                          ),
-                        ]),
-                  ],
+                          ]),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -13,9 +13,9 @@ import 'LogIn.dart';
 import 'home_page.dart';
 
 void main() => runApp(MaterialApp(
-  debugShowCheckedModeBanner: false,
-  home: SignUp(),
-));
+      debugShowCheckedModeBanner: false,
+      home: SignUp(),
+    ));
 
 class SignUp extends StatefulWidget {
   SignUp({Key key}) : super(key: key);
@@ -28,8 +28,9 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
   final _auth = FirebaseAuth.instance;
-  String email, password, fName, lName,phone;
+  String email, password, fName, lName, phone, gender, birth;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -40,9 +41,8 @@ class _SignUpState extends State<SignUp> {
           child: Container(
             height: screenHeight,
             width: screenWidth,
-            decoration: BoxDecoration(
-                color: Color.fromARGB(255,122, 158, 159)
-              ),
+            decoration:
+                BoxDecoration(color: Color.fromARGB(255, 122, 158, 159)),
             child: SingleChildScrollView(
               child: Stack(children: <Widget>[
                 Positioned(
@@ -52,7 +52,7 @@ class _SignUpState extends State<SignUp> {
                   child: Container(
                     padding: EdgeInsets.fromLTRB(50, 50, 50, 0),
                     child: Text(
-                      'Tameny Ya Doctor!',
+                      'Doctor Bot',
                       style: TextStyle(
                           color: Color.fromARGB(255, 238, 245, 219),
                           fontWeight: FontWeight.bold,
@@ -81,8 +81,7 @@ class _SignUpState extends State<SignUp> {
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 17,
-                                color: Color.fromARGB(255, 238, 245, 219)
-                            ),
+                                color: Color.fromARGB(255, 238, 245, 219)),
                           ),
                         ),
                         FlatButton(
@@ -142,9 +141,9 @@ class _SignUpState extends State<SignUp> {
                                               fontSize: 16,
                                               fontWeight: FontWeight.bold),
                                           border: OutlineInputBorder(),
-                                          hintStyle:
-                                          TextStyle( color: Color.fromARGB(
-                                              255, 238, 245, 219),
+                                          hintStyle: TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 238, 245, 219),
                                               fontSize: 16,
                                               fontWeight: FontWeight.bold)),
                                       // validator: validateText,
@@ -188,9 +187,9 @@ class _SignUpState extends State<SignUp> {
                                               fontSize: 16,
                                               fontWeight: FontWeight.bold),
                                           border: OutlineInputBorder(),
-                                          hintStyle:
-                                          TextStyle( color: Color.fromARGB(
-                                              255, 238, 245, 219),
+                                          hintStyle: TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 238, 245, 219),
                                               fontSize: 16,
                                               fontWeight: FontWeight.bold)),
                                       // validator: validateText,
@@ -230,14 +229,14 @@ class _SignUpState extends State<SignUp> {
                                     ),
                                     labelText: "Email Address",
                                     labelStyle: TextStyle(
-                                        color: Color.fromARGB(
-                                            255, 238, 245, 219),
+                                        color:
+                                            Color.fromARGB(255, 238, 245, 219),
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold),
                                     border: OutlineInputBorder(),
-                                    hintStyle:
-                                    TextStyle( color: Color.fromARGB(
-                                        255, 238, 245, 219),
+                                    hintStyle: TextStyle(
+                                        color:
+                                            Color.fromARGB(255, 238, 245, 219),
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold)),
                                 // validator: validateText,
@@ -270,28 +269,25 @@ class _SignUpState extends State<SignUp> {
                                     ),
                                     labelText: "Password",
                                     labelStyle: TextStyle(
-                                        color: Color.fromARGB(
-                                            255, 238, 245, 219),
+                                        color:
+                                            Color.fromARGB(255, 238, 245, 219),
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold),
                                     border: OutlineInputBorder(),
-                                    hintStyle:
-                                    TextStyle( color: Color.fromARGB(
-                                        255, 238, 245, 219),
+                                    hintStyle: TextStyle(
+                                        color:
+                                            Color.fromARGB(255, 238, 245, 219),
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold)),
                                 validator: Validators.compose([
                                   Validators.required('Password is required'),
                                   Validators.minLength(
-                                      8, 'Characters are less than 8'),
+                                      6, 'Characters are less than 6'),
                                   Validators.maxLength(
                                       15, 'Characters are greater than 15'),
                                 ]),
                               ),
                             ),
-
-
-
                             Container(
                               padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
                               child: TextFormField(
@@ -315,14 +311,14 @@ class _SignUpState extends State<SignUp> {
                                     ),
                                     labelText: "Phone",
                                     labelStyle: TextStyle(
-                                        color: Color.fromARGB(
-                                            255, 238, 245, 219),
+                                        color:
+                                            Color.fromARGB(255, 238, 245, 219),
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold),
                                     border: OutlineInputBorder(),
-                                    hintStyle:
-                                    TextStyle( color: Color.fromARGB(
-                                        255, 238, 245, 219),
+                                    hintStyle: TextStyle(
+                                        color:
+                                            Color.fromARGB(255, 238, 245, 219),
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold)),
                                 validator: Validators.compose([
@@ -335,7 +331,6 @@ class _SignUpState extends State<SignUp> {
                                 ]),
                               ),
                             ),
-
                             Container(
                               padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
                               child: TextFormField(
@@ -357,14 +352,14 @@ class _SignUpState extends State<SignUp> {
                                     hintText: ('--/--/----'),
                                     labelText: "Birthday",
                                     labelStyle: TextStyle(
-                                        color: Color.fromARGB(
-                                            255, 238, 245, 219),
+                                        color:
+                                            Color.fromARGB(255, 238, 245, 219),
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold),
                                     border: OutlineInputBorder(),
-                                    hintStyle:
-                                    TextStyle( color: Color.fromARGB(
-                                        255, 238, 245, 219),
+                                    hintStyle: TextStyle(
+                                        color:
+                                            Color.fromARGB(255, 238, 245, 219),
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold)),
                                 validator: Validators.compose([
@@ -372,22 +367,24 @@ class _SignUpState extends State<SignUp> {
                                   Validators.minLength(
                                       8, 'Characters are less than 11'),
                                   Validators.patternRegExp(
-                                      RegExp(r'^([0]?[1-9]|[1|2][0-9]|[3][0|1])[./-]([0]?[1-9]|[1][0-2])[./-]([0-9]{4}|[0-9]{2})$'),
+                                      RegExp(
+                                          r'^([0]?[1-9]|[1|2][0-9]|[3][0|1])[./-]([0]?[1-9]|[1][0-2])[./-]([0-9]{4}|[0-9]{2})$'),
                                       'Enter Your Birthday '),
                                 ]),
+                                onFieldSubmitted: (value) {
+                                  birth = value;
+                                },
                               ),
                             ),
-
                             GenderSelection(
-                              // maleText: "", //default Male
-                              // femaleText: "", //default Female
-                              selectedGenderIconBackgroundColor: Color.fromARGB(255, 238, 245, 219),  // default red
-                              checkIconAlignment: Alignment.centerRight,   // default bottomRight
-                              selectedGenderCheckIcon: null, // default Icons.check
-                              onChanged: (Gender gender){
-
-                                print(gender);
-
+                              selectedGenderIconBackgroundColor: Color.fromARGB(
+                                  255, 238, 245, 219), // default red
+                              checkIconAlignment:
+                                  Alignment.centerRight, // default bottomRight
+                              selectedGenderCheckIcon:
+                                  null, // default Icons.check
+                              onChanged: (Gender g) {
+                                gender=g.toString().substring(7);
                               },
                               equallyAligned: true,
                               animationDuration: Duration(milliseconds: 400),
@@ -396,13 +393,7 @@ class _SignUpState extends State<SignUp> {
                               opacityOfGradient: 0.6,
                               padding: const EdgeInsets.all(3),
                               size: 100, //default : 120
-
                             ),
-
-
-
-
-
                           ],
                         ),
                       ),
@@ -412,28 +403,29 @@ class _SignUpState extends State<SignUp> {
                         child: ElevatedButton(
                           onPressed: () async {
                             if (_formKey.currentState.validate()) {
-                              print("Form was submitted successfully yalla.");
+                              print("Form was submitted successfully.");
                               try {
                                 final newUser =
-                                await _auth.createUserWithEmailAndPassword(
-                                    email: email, password: password);
+                                    await _auth.createUserWithEmailAndPassword(
+                                        email: email, password: password);
                                 var user = newUser.user;
                                 var map = {
                                   'fName': fName,
                                   'lName': lName,
                                   'email': user.email,
-                                  'phone': '',
-                                  'gender': 'male'
+                                  'phone': phone,
+                                  'gender': gender,
+                                  'birth': birth
                                 };
-                                var mapHistory = {
-                                  'H':[]
-                                };
-                                var mapDrugs = {
-                                  'D':[]
-                                };
-                                await DatabaseService(uid: user.uid, info: map,history:mapHistory,drugs: mapDrugs).init();
+                                var mapHistory = {'H': []};
+                                var mapDrugs = {'D': []};
+                                await DatabaseService(
+                                        uid: user.uid,
+                                        info: map,
+                                        history: mapHistory,
+                                        drugs: mapDrugs)
+                                    .init();
                                 if (newUser != null) {
-
                                   Navigator.pushNamed(context, HomePage.id);
                                 }
                               } on FirebaseAuthException catch (e) {
@@ -457,12 +449,15 @@ class _SignUpState extends State<SignUp> {
                                   color: Color.fromARGB(255, 238, 245, 219)),
                               primary: Color.fromARGB(255, 79, 99, 103),
                               padding: EdgeInsets.fromLTRB(110, 30, 100, 20)),
-                          child: Text('Sign Up',style: TextStyle(
-                            fontSize: 18,
+                          child: Text(
+                            'Sign Up',
+                            style: TextStyle(
+                              fontSize: 18,
+                            ),
                           ),
                         ),
-                      ),
-                      )],
+                      )
+                    ],
                   ),
                 )
               ]),

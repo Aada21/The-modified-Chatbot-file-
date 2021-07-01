@@ -44,6 +44,8 @@ dependencies:
   dialogflow_grpc: ^0.2.9
   intl: ^0.17.0
   gender_selection: "^0.0.8"
+  image_picker: ^0.8.1+3
+  firebase_storage: ^9.0.0
 
 
 

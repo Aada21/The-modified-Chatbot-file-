@@ -1,11 +1,15 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:imagebutton/imagebutton.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
 import 'package:profile_page/db.dart';
 
@@ -84,41 +88,49 @@ class _ProfilePageState extends State<ProfilePage> {
                     children: [
                       Container(
                         child: Padding(
-                          padding: EdgeInsets.fromLTRB(35, 25, 0, 0),
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                CircleAvatar(
-                                  backgroundImage:
-                                      AssetImage("images/user.jpg"),
-                                  radius: 80.0,
-                                ),
-                                SizedBox(
-                                  height: 10.0,
-                                ),
-                                StreamBuilder(
-                                    stream: FirebaseFirestore.instance
-                                        .collection('Profile')
-                                        .doc(_auth.currentUser.uid)
-                                        .snapshots(),
-                                    builder: (context, snapshot) {
-                                      if (!snapshot.hasData) {
-                                        return Center(child: Loading());
-                                      }
-                                      return Text(
-                                        "Welcome ${snapshot.data['fName']}",
-                                        style: TextStyle(
-                                          fontSize: 22.0,
-                                          color: Color.fromARGB(
-                                              255, 238, 245, 219),
-                                        ),
-                                      );
-                                    }),
-                                SizedBox(
-                                  height: 40.0,
-                                )
-                              ]),
+                          padding: EdgeInsets.fromLTRB(0, 25, 0, 0),
+                          child: Center(
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  ImageButton(
+
+                                    children: <Widget>[],
+                                    width: 100,
+                                    height: 100,
+                                    pressedImage: Image.asset(
+                                      "images/avatar.png",
+                                    ),
+                                    unpressedImage: Image.asset("images/avatar.png"),
+                                  ),
+                                  SizedBox(
+                                    height: 10.0,
+                                  ),
+                                  StreamBuilder(
+                                      stream: FirebaseFirestore.instance
+                                          .collection('Profile')
+                                          .doc(_auth.currentUser.uid)
+                                          .snapshots(),
+                                      builder: (context, snapshot) {
+                                        if (!snapshot.hasData) {
+                                          return Center(child: Loading());
+                                        }
+                                        return Text(
+                                          "Welcome ${snapshot.data['fName']}",
+                                          style: TextStyle(
+                                            fontSize: 22.0,
+                                            color: Color.fromARGB(
+                                                255, 238, 245, 219),
+                                          ),
+                                        );
+                                      }),
+                                  SizedBox(
+                                    height: 40.0,
+                                  )
+                                ]),
+                          ),
                         ),
                       ),
                       Stack(children: [
@@ -140,7 +152,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                         padding: const EdgeInsets.fromLTRB(
                                             110, 14, 0, 0),
                                         child: Text(
-                                          '${snapshot.data['fName']}',
+                                          '${snapshot.data['fName']} ${snapshot.data['lName']}',
                                           style: TextStyle(
                                             fontSize: 20.0,
                                             color: Color.fromARGB(
@@ -151,7 +163,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       padding: const EdgeInsets.fromLTRB(
                                           110, 40, 10, 0),
                                       child: Text(
-                                        'phone',
+                                        "${snapshot.data['phone']}",
                                         style: TextStyle(
                                           fontSize: 20.0,
                                           color: Color.fromARGB(
@@ -175,7 +187,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       padding: const EdgeInsets.fromLTRB(
                                           110, 50, 10, 0),
                                       child: Text(
-                                        'birth',
+                                        '${snapshot.data['birth']}',
                                         style: TextStyle(
                                           fontSize: 20.0,
                                           color: Color.fromARGB(
@@ -279,11 +291,4 @@ class GenderField extends StatelessWidget {
       ),
     );
   }
-}
-
-getData(var id) async {
-  final data =
-      await FirebaseFirestore.instance.collection('Profile').doc(id).get();
-
-  return await data.data()['fName'];
 }

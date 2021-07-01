@@ -7,6 +7,8 @@ import 'package:profile_page/ProfilePage.dart';
 import 'package:profile_page/SignUp.dart';
 import 'package:profile_page/chatbot.dart';
 import 'package:wc_form_validators/wc_form_validators.dart';
+import 'ConfirmEmail.dart';
+import 'ForgotPassword.dart';
 import 'History.dart';
 import 'LogIn.dart';
 import 'SplashScreen.dart';
@@ -24,9 +26,8 @@ class DogBot extends StatelessWidget {
     return MaterialApp(
       // debugShowCheckedModeBanner: false,
       title: 'Home',
-
       debugShowCheckedModeBanner: false,
-      initialRoute: SignUp.id,
+      initialRoute: SplashScreen.id,
       routes: {
         SplashScreen.id: (context) => SplashScreen(),
         LogIn.id: (context) => LogIn(),
@@ -37,6 +38,8 @@ class DogBot extends StatelessWidget {
         HistoryPage.id: (context) => HistoryPage(),
         Drugs.id: (context) => Drugs(),
         AnimationList.id: (context) => AnimationList(),
+        ConfirmEmail.id: (context) => ConfirmEmail(),
+        ForgotPassword.id: (context) => ForgotPassword(),
       },
     );
   }

@@ -21,8 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(Duration(seconds: 5), () {
           if(FirebaseAuth.instance.currentUser!=null)
           {
-            Navigator.of(context)
-                .pushReplacement(MaterialPageRoute(builder: (_) =>HomePage()));
+            Navigator.pushNamed(context, HomePage.id);
           }
           else
           {

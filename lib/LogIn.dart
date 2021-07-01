@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:profile_page/home_page.dart';
 import 'package:wc_form_validators/wc_form_validators.dart';
+import 'ForgotPassword.dart';
 import 'SignUp.dart';
 import 'package:get/get.dart';
 
@@ -56,7 +57,7 @@ class _LogInState extends State<LogIn> {
                     child: Container(
                       padding: EdgeInsets.fromLTRB(50, 0, 50, 0),
                       child: Text(
-                        'Tameny Ya Doctor!',
+                        'Doctor Bot',
                         style: TextStyle(
                             color: Color.fromARGB(255, 238, 245, 219),
                             fontWeight: FontWeight.bold,
@@ -220,7 +221,7 @@ class _LogInState extends State<LogIn> {
                                           fontWeight: FontWeight.bold)),
                                   validator: Validators.compose([
                                     Validators.required('Password is required'),
-                                    Validators.minLength(8, 'Characters are less than 8'),
+                                    Validators.minLength(6, 'Characters are less than 6'),
                                     Validators.maxLength(15, 'Characters are greater than 15'),
                                   ]),
                                 ),
@@ -278,7 +279,9 @@ class _LogInState extends State<LogIn> {
                         ),
                         FlatButton(
                           onPressed: ()  {
-
+                            Navigator.pushNamed(
+                                context,
+                                ForgotPassword.id);
                           },
                           child: Text(
                             'Forgot Password?',
