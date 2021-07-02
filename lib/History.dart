@@ -509,6 +509,9 @@ class _HistoryPageState extends State<HistoryPage> {
                                 child: CircularProgressIndicator());
                           }
                           items = snapshot.data['H'];
+
+                            HomePage.dataList= items ;
+
                           return Column(
                             children: [
                               Expanded(

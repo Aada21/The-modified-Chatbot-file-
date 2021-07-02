@@ -18,6 +18,7 @@ import 'home_page.dart';
 
 class Drugs extends StatefulWidget {
   static String id = 'Diabetes_page';
+  static List<dynamic> dataList;
   @override
   _DrugsState createState() => _DrugsState();
 }
@@ -505,6 +506,7 @@ class _DrugsState extends State<Drugs> {
                               child: CircularProgressIndicator());
                         }
                         items = snapshot.data['D'];
+                        Drugs.dataList=items;
                         return Column(
                           children: [
                             Expanded(

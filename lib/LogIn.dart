@@ -19,7 +19,7 @@ class LogIn extends StatefulWidget {
   LogIn({Key key}) : super(key: key);
   static String id = 'LogIn';
   static List<dynamic> list;
-
+  static String uid = FirebaseAuth.instance.currentUser.uid;
 
 
   @override
@@ -28,6 +28,7 @@ class LogIn extends StatefulWidget {
 
 class _LogInState extends State<LogIn> {
   final _auth = FirebaseAuth.instance;
+
   String email;
   String password;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
