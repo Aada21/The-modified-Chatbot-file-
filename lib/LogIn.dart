@@ -1,19 +1,17 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:profile_page/home_page.dart';
 import 'package:wc_form_validators/wc_form_validators.dart';
+
 import 'ForgotPassword.dart';
 import 'SignUp.dart';
-import 'package:get/get.dart';
 
-import 'db.dart';
 void main() => runApp(MaterialApp(
-  debugShowCheckedModeBanner: false,
-  home: LogIn(),
-));
+      debugShowCheckedModeBanner: false,
+      home: LogIn(),
+    ));
 
 class LogIn extends StatefulWidget {
   LogIn({Key key}) : super(key: key);
@@ -21,13 +19,15 @@ class LogIn extends StatefulWidget {
   static List<dynamic> list;
   static String uid = FirebaseAuth.instance.currentUser.uid;
 
-
   @override
   _LogInState createState() => _LogInState();
 }
 
 class _LogInState extends State<LogIn> {
   final _auth = FirebaseAuth.instance;
+  GlobalKey _toolTipKey = GlobalKey();
+  GlobalKey _toolTipKey1 = GlobalKey();
+  GlobalKey _toolTipKey2 = GlobalKey();
 
   String email;
   String password;
@@ -41,9 +41,8 @@ class _LogInState extends State<LogIn> {
           child: Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-                color: Color.fromARGB(255,122, 158, 159)
-            ),
+            decoration:
+                BoxDecoration(color: Color.fromARGB(255, 122, 158, 159)),
             child: SingleChildScrollView(
               child: Column(children: <Widget>[
                 SizedBox(
@@ -112,20 +111,86 @@ class _LogInState extends State<LogIn> {
                           child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                SignInButton(
-                                  Buttons.Facebook,
-                                  mini: true,
-                                  onPressed: () {},
+                                GestureDetector(
+                                  onTap: () {
+                                    final dynamic tooltip =
+                                        _toolTipKey.currentState;
+                                    tooltip.ensureTooltipVisible();
+                                  },
+                                  child: Tooltip(
+                                    key: _toolTipKey,
+                                    waitDuration: Duration(seconds: 1),
+                                    showDuration: Duration(seconds: 1),
+                                    padding: EdgeInsets.all(5),
+                                    height: 35,
+                                    textStyle: TextStyle(
+                                        fontSize: 15,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.normal),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.green),
+                                    message: 'Coming soon sign with Facebook',
+                                    child: SignInButton(
+                                      Buttons.Facebook,
+                                      mini: true,
+                                      onPressed: null,
+                                    ),
+                                  ),
                                 ),
-                                SignInButton(
-                                  Buttons.Email,
-                                  mini: true,
-                                  onPressed: () {},
+                                GestureDetector(
+                                  onTap: () {
+                                    final dynamic tooltip =
+                                        _toolTipKey2.currentState;
+                                    tooltip.ensureTooltipVisible();
+                                  },
+                                  child: Tooltip(
+                                    key: _toolTipKey2,
+                                    waitDuration: Duration(seconds: 1),
+                                    showDuration: Duration(seconds: 1),
+                                    padding: EdgeInsets.all(5),
+                                    height: 35,
+                                    textStyle: TextStyle(
+                                        fontSize: 15,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.normal),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.green),
+                                    message: 'Coming soon sign with GitHub',
+                                    child: SignInButton(
+                                      Buttons.GitHub,
+                                      mini: true,
+                                      onPressed: null,
+                                    ),
+                                  ),
                                 ),
-                                SignInButton(
-                                  Buttons.Twitter,
-                                  mini: true,
-                                  onPressed: () {},
+                                GestureDetector(
+                                  onTap: () {
+                                    final dynamic tooltip =
+                                        _toolTipKey1.currentState;
+                                    tooltip.ensureTooltipVisible();
+                                  },
+                                  child: Tooltip(
+                                    waitDuration: Duration(seconds: 1),
+                                    showDuration: Duration(seconds: 1),
+                                    key: _toolTipKey1,
+                                    padding: EdgeInsets.all(5),
+                                    height: 35,
+                                    textStyle: TextStyle(
+                                        fontSize: 15,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.normal),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.green),
+                                    message: 'Coming soon sign with Twitter',
+                                    child: SignInButton(
+                                      Buttons.Twitter,
+                                      mini: true,
+                                      onPressed: null,
+                                    ),
+                                  ),
                                 ),
                               ]),
                         ),
@@ -137,7 +202,7 @@ class _LogInState extends State<LogIn> {
                     child: Column(
                       children: <Widget>[
                         Form(
-                          key:_formKey,
+                          key: _formKey,
                           child: Column(
                             children: <Widget>[
                               Container(
@@ -214,34 +279,38 @@ class _LogInState extends State<LogIn> {
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold),
                                       border: OutlineInputBorder(),
-                                      hintStyle:
-                                      TextStyle( color: Color.fromARGB(
-                                          255, 238, 245, 219),
+                                      hintStyle: TextStyle(
+                                          color: Color.fromARGB(
+                                              255, 238, 245, 219),
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold)),
                                   validator: Validators.compose([
                                     Validators.required('Password is required'),
-                                    Validators.minLength(6, 'Characters are less than 6'),
-                                    Validators.maxLength(15, 'Characters are greater than 15'),
+                                    Validators.minLength(
+                                        6, 'Characters are less than 6'),
+                                    Validators.maxLength(
+                                        15, 'Characters are greater than 15'),
                                   ]),
                                 ),
                               )
                             ],
                           ),
-                        ), Container(
+                        ),
+                        Container(
                           width: size.width,
                           padding: EdgeInsets.fromLTRB(0, 40, 0, 0),
                           child: ElevatedButton(
-                            onPressed: () async{
+                            onPressed: () async {
                               if (_formKey.currentState.validate()) {
                                 print("Form was submitted successfully.");
                                 try {
-                                  final user = await _auth.signInWithEmailAndPassword(email: email, password: password);
+                                  final user =
+                                      await _auth.signInWithEmailAndPassword(
+                                          email: email, password: password);
                                   if (user != null) {
-
                                     Navigator.pushNamed(context, HomePage.id);
                                   }
-                                } on FirebaseAuthException  catch (e) {
+                                } on FirebaseAuthException catch (e) {
                                   final snackBar = SnackBar(
                                     content: Text(e.message),
                                     action: SnackBarAction(
@@ -251,8 +320,8 @@ class _LogInState extends State<LogIn> {
                                       },
                                     ),
                                   );
-                                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(snackBar);
                                 }
                               }
                             },
@@ -268,8 +337,6 @@ class _LogInState extends State<LogIn> {
                                 )),
                           ),
                         ),
-
-
                         SizedBox(
                           height: 30,
                           width: 50,
@@ -278,10 +345,8 @@ class _LogInState extends State<LogIn> {
                           height: 60,
                         ),
                         FlatButton(
-                          onPressed: ()  {
-                            Navigator.pushNamed(
-                                context,
-                                ForgotPassword.id);
+                          onPressed: () {
+                            Navigator.pushNamed(context, ForgotPassword.id);
                           },
                           child: Text(
                             'Forgot Password?',
@@ -298,6 +363,5 @@ class _LogInState extends State<LogIn> {
             ),
           ),
         ));
-
   }
 }
